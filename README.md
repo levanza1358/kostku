@@ -49,4 +49,4 @@ Import `backend-php/database/schema.sql` (single source of truth for the schema;
 
 See [User flows](docs/USER-FLOWS.md), [API specification](docs/API-SPEC.md), [Database](docs/DATABASE.md), and [deployment README](backend-php/README.md).
 
-The `backend/` Node/PostgreSQL tree is legacy and is not the production service.
+The production service is the native PHP/MySQL backend in `backend-php/`.

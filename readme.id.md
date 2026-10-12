@@ -39,4 +39,4 @@ Impor `backend-php/database/schema.sql` (satu-satunya sumber skema; sudah termas
 
 Lihat [README.md](README.md), [alur pengguna](docs/USER-FLOWS.md), dan [indeks docs](docs/).
 
-Folder Node/PostgreSQL adalah legacy, bukan backend produksi.
+Backend produksi adalah layanan PHP/MySQL native di folder `backend-php/`.

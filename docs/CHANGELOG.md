@@ -1,5 +1,12 @@
 # Changelog — Kostku
 
+## Unreleased — hapus backend legacy `backend/` (Node/PostgreSQL)
+
+### Removed
+- **Folder `backend/` (Node/PostgreSQL, legacy) dihapus** dari repo dan disk. Backend produksi satu-satunya adalah `backend-php/` (PHP native + PDO + MySQL/MariaDB).
+- Referensi "Folder Node/PostgreSQL adalah legacy" di `README.md`, `readme.id.md`, `docs/PRD.md`, `docs/DATABASE.md`, dan `docs/RULES.md` dibersihkan; `.gitignore` disesuaikan (`backend/dist/` → `dist/`).
+- Verifikasi: `./gradlew assembleDebug` **BUILD SUCCESSFUL** setelah penghapusan (Gradle hanya menyertakan modul `:app`, tidak ada dependensi ke `backend/`).
+
 ## Unreleased — Tandai keluar: arsip otomatis + pilihan status kamar
 
 ### Changed

@@ -72,7 +72,7 @@ MVP berjalan bila pengguna dapat login Google, memulihkan sesi, membuat lokasi/t
 
 ## 7. Deployment note
 
-Backend produksi berada di `backend-php/`. File `index.php` produksi harus diunggah manual ke server. Folder `backend/` Node/PostgreSQL adalah legacy, bukan service produksi.
+Backend produksi berada di `backend-php/`. File `index.php` produksi harus diunggah manual ke server.
 
 ## 8. Open questions / future
 

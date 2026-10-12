@@ -18,9 +18,9 @@ local.properties
 app/build/
 */build/
 
-# Node (backend/ is legacy; never commit dependencies or build output)
+# Node (never commit dependencies or build output)
 node_modules/
-backend/dist/
+dist/
 
 # Secrets & environment (never commit)
 .env
