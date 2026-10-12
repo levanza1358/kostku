@@ -1,0 +1,137 @@
+{
+  "project_info": {
+    "project_number": "260370979383",
+    "project_id": "miraya-apps",
+    "storage_bucket": "miraya-apps.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:260370979383:android:46ab38a980861550633db2",
+        "android_client_info": {
+          "package_name": "com.miraya.kostku"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "260370979383-ka3t15j2o0slo2p7caqs78el7qm0hvk9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.miraya.kostku",
+            "certificate_hash": "826ed2b6d8c72967bb1ac8f2d8fc91de617082aa"
+          }
+        },
+        {
+          "client_id": "260370979383-v3kcfc50rl1lflaet14etv490mrqv67d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBv35e5riZApP9IpPO8SgoIw5lzpge8dIM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "260370979383-v3kcfc50rl1lflaet14etv490mrqv67d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:260370979383:android:1d8e38fdfd142a74633db2",
+        "android_client_info": {
+          "package_name": "com.miraya.renma"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "260370979383-j06p1d4c0eg424giinmg121b8e9iqqlf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.miraya.renma",
+            "certificate_hash": "7fe52756b5fbecd62e44aacf0ef95484fbd6527a"
+          }
+        },
+        {
+          "client_id": "260370979383-qrsjosgg7jdv0gm8n0oqrvseth52t50d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.miraya.renma",
+            "certificate_hash": "abdbb38a7edc4bc47beb798cd1e822453b2ebf64"
+          }
+        },
+        {
+          "client_id": "260370979383-v3kcfc50rl1lflaet14etv490mrqv67d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBv35e5riZApP9IpPO8SgoIw5lzpge8dIM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "260370979383-v3kcfc50rl1lflaet14etv490mrqv67d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:260370979383:android:66f625f9ef2a4665633db2",
+        "android_client_info": {
+          "package_name": "com.mirayastudio.kostan"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "260370979383-op7mreu5lkomj82kt5nk9o24ae8jdl5j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mirayastudio.kostan",
+            "certificate_hash": "7fe52756b5fbecd62e44aacf0ef95484fbd6527a"
+          }
+        },
+        {
+          "client_id": "260370979383-s9o0u2da61r8f2d32cg14m2ah10hapet.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mirayastudio.kostan",
+            "certificate_hash": "abdbb38a7edc4bc47beb798cd1e822453b2ebf64"
+          }
+        },
+        {
+          "client_id": "260370979383-v3kcfc50rl1lflaet14etv490mrqv67d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBv35e5riZApP9IpPO8SgoIw5lzpge8dIM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "260370979383-v3kcfc50rl1lflaet14etv490mrqv67d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

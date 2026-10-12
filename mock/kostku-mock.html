@@ -1,0 +1,1433 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kostku — Mockup lengkap (satu file)</title>
+<style>
+  :root{
+    --bg:#121316; --container:#1B1D21; --containerHigh:#232529; --variant:#272A2F; --outline:#33373E;
+    --accent:#93C5FD; --onAccent:#0B1220; --accentContainer:#33455C; --onAccentContainer:#D6E7FE;
+    --text:#E7E9EE; --muted:#9AA1AC; --green:#6EE7B7; --greenBg:rgba(110,231,183,.14);
+    --red:#FCA5A5; --redBg:rgba(252,165,165,.14); --amber:#FCD34D; --amberBg:rgba(252,211,77,.14);
+  }
+  .light{
+    --bg:#F7F8FB; --container:#FFFFFF; --containerHigh:#F1F3F8; --variant:#E7EAF1; --outline:#CBD1DB;
+    --accent:#2563EB; --onAccent:#FFFFFF; --accentContainer:#DCE6FC; --onAccentContainer:#184099;
+    --text:#1B1D21; --muted:#5C636E; --green:#0F766E; --greenBg:rgba(15,118,110,.12);
+    --red:#B91C1C; --redBg:rgba(185,28,28,.10); --amber:#92600A; --amberBg:rgba(146,96,10,.12);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#0a0b0d;color:#E7E9EE;font-family:'Roboto',system-ui,-apple-system,'Segoe UI',sans-serif;padding:34px 22px 70px;line-height:1.4}
+  .doc{max-width:1560px;margin:0 auto}
+  h1{font-size:26px;font-weight:600;margin-bottom:6px}
+  h2.sec{font-size:19px;font-weight:700;margin:40px 2px 4px;color:#E7E9EE;border-left:4px solid #93C5FD;padding-left:12px}
+  h2.sec small{color:#9AA1AC;font-weight:400;font-size:13px;margin-left:8px}
+  h2.sec.new{border-left-color:#6EE7B7}
+  h2.sec.new::after{content:"BARU";font-size:10px;font-weight:800;letter-spacing:1px;color:#0B1220;background:#6EE7B7;border-radius:999px;padding:2px 8px;margin-left:10px;vertical-align:middle}
+  p.lead{color:#9AA1AC;font-size:14px;line-height:1.6;max-width:1000px;margin-bottom:6px}
+  code{background:#1B1D21;border:1px solid #33373E;border-radius:6px;padding:1px 6px;font-size:12.5px;color:#93C5FD}
+
+  /* ===== tokens ===== */
+  .tokens{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;margin:18px 0 8px}
+  .tbox{background:#111317;border:1px solid #262a30;border-radius:16px;padding:16px}
+  .tbox h4{font-size:13px;color:#9AA1AC;font-weight:600;letter-spacing:.4px;text-transform:uppercase;margin-bottom:12px}
+  .sw-row{display:flex;gap:14px;flex-wrap:wrap}
+  .swx{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:11px;color:#9AA1AC}
+  .swx i{width:40px;height:40px;border-radius:12px;border:1px solid #33373E;display:block}
+  .kvlist{display:flex;flex-direction:column;gap:9px}
+  .kvlist div{display:flex;justify-content:space-between;gap:10px;font-size:13px;color:#C9CED6}
+  .kvlist b{color:#93C5FD;font-weight:600;font-variant-numeric:tabular-nums}
+  .spacebar{display:flex;align-items:center;gap:10px;font-size:12px;color:#9AA1AC}
+  .spacebar i{height:14px;background:#33455C;border-radius:3px;display:block}
+
+  /* ===== grid & phones ===== */
+  .grid{display:flex;flex-wrap:wrap;gap:26px;margin-top:16px}
+  .frame{display:flex;flex-direction:column;gap:8px;width:342px}
+  .cap{font-size:12.5px;color:#9AA1AC;text-align:center;line-height:1.45}
+  .cap b{color:#E7E9EE}
+  .size{display:inline-block;font-size:11px;color:#93C5FD;background:#161b22;border:1px solid #2a3340;border-radius:999px;padding:2px 9px;margin-top:4px}
+
+  .phonewrap{position:relative}
+  .phone{width:342px;height:740px;background:var(--bg);color:var(--text);border-radius:30px;border:1px solid #2a2d33;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 22px 54px rgba(0,0,0,.5);position:relative}
+  .statusbar{height:32px;display:flex;justify-content:space-between;align-items:center;padding:0 20px;font-size:12px;color:var(--muted);flex:0 0 auto}
+  .appbar{min-height:56px;display:flex;align-items:center;gap:12px;padding:0 16px;flex:0 0 auto}
+  .appbar h3{font-size:20px;font-weight:600;color:var(--text)}
+  .grow{flex:1;min-width:0}
+  .ic{width:21px;height:21px;fill:currentColor;display:block}
+  .ic.sm{width:17px;height:17px}.ic.xs{width:14px;height:14px}.ic.lg{width:26px;height:26px}
+  .iconbtn{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;color:var(--accent);border:1px solid var(--outline);flex:0 0 auto}
+  .iconbtn.plain{border:0;color:var(--muted)}
+  .iconbtn.danger{color:var(--red)}
+
+  .content{flex:1;overflow:hidden;padding:4px 16px 12px;display:flex;flex-direction:column;gap:12px}
+  .scroll{flex:1;display:flex;flex-direction:column;gap:12px;overflow:hidden}
+  .card{background:var(--container);border:1px solid var(--outline);border-radius:16px;padding:15px}
+  .stack{display:flex;flex-direction:column}
+  .row{display:flex;align-items:center}
+  .between{justify-content:space-between}
+  .g4{gap:4px}.g6{gap:6px}.g8{gap:8px}.g10{gap:10px}.g12{gap:12px}.g14{gap:14px}
+  .muted{color:var(--muted)}
+  .t22{font-size:22px}.t20{font-size:20px}.t16{font-size:16px}.t15{font-size:15px}.t14{font-size:14px}.t13{font-size:13px}.t12{font-size:12px}.t11{font-size:11px}
+  .w6{font-weight:600}.w7{font-weight:700}
+  .hi{color:var(--accent)}
+  .trunc{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+  .center{align-items:center;justify-content:center;text-align:center}
+
+  .chip{display:inline-flex;align-items:center;gap:6px;padding:5px 11px;border-radius:999px;font-size:12px;font-weight:600;white-space:nowrap;flex:0 0 auto}
+  .chip .dot{width:6px;height:6px;border-radius:50%;background:currentColor}
+  .chip.ok{background:var(--greenBg);color:var(--green)}
+  .chip.warn{background:var(--amberBg);color:var(--amber)}
+  .chip.err{background:var(--redBg);color:var(--red)}
+  .chip.neutral{background:var(--variant);color:var(--muted)}
+  .chip.acc{background:var(--accentContainer);color:var(--onAccentContainer)}
+
+  .avatar{width:52px;height:52px;border-radius:50%;object-fit:cover;background:var(--variant);flex:0 0 auto;display:grid;place-items:center;color:var(--muted)}
+  .avatar.sm{width:44px;height:44px}.avatar.xs{width:40px;height:40px}.avatar.lg{width:64px;height:64px}
+
+  .logo{width:48px;height:48px;border-radius:14px;flex:0 0 auto;display:grid;place-items:center;color:var(--accent);background:var(--accentContainer);background-size:cover;background-position:center;font-weight:700}
+  .logo.sm{width:42px;height:42px;border-radius:12px}.logo.lg{width:58px;height:58px;border-radius:16px}
+
+  /* bidang logo di form lokasi */
+  .logofield{position:relative;width:92px;height:92px;border-radius:22px;border:1.5px dashed var(--outline);background:var(--container);display:grid;place-items:center;color:var(--muted)}
+  .logofield.has{border-style:solid;border-color:var(--accent);background-size:cover;background-position:center}
+  .logofield .cam{position:absolute;right:-6px;bottom:-6px;width:32px;height:32px;border-radius:50%;background:var(--accent);color:var(--onAccent);display:grid;place-items:center;border:2px solid var(--container)}
+  .logofield .cam .ic{width:16px;height:16px}
+
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:42px;padding:0 16px;border-radius:999px;border:1px solid var(--outline);font-size:14px;font-weight:600;color:var(--text);background:transparent;flex:0 0 auto}
+  .btn .ic{width:18px;height:18px}
+  .btn.primary{background:var(--accent);color:var(--onAccent);border-color:transparent}
+  .btn.tonal{background:var(--accentContainer);color:var(--onAccentContainer);border-color:transparent}
+  .btn.block{width:100%;height:52px;border-radius:16px;font-size:16px}
+  .fab{position:absolute;right:18px;bottom:100px;width:56px;height:56px;border-radius:18px;background:var(--accent);color:var(--onAccent);display:grid;place-items:center;box-shadow:0 10px 22px rgba(0,0,0,.42);z-index:6}
+  .fab .ic{width:26px;height:26px}
+  .fab.sm{width:52px;height:52px;border-radius:16px}
+  .fab.xs{width:44px;height:44px;border-radius:14px}
+
+  .navbar{flex:0 0 auto;height:80px;border-top:1px solid var(--outline);background:var(--bg);display:flex;padding:8px 6px 0}
+  .navitem{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;color:var(--muted);font-size:11.5px}
+  .navitem .pill{width:60px;height:30px;border-radius:999px;display:grid;place-items:center}
+  .navitem.on{color:var(--accent)}
+  .navitem.on .pill{background:var(--accentContainer)}
+  .homebar{flex:0 0 auto;height:20px;display:grid;place-items:center}
+  .homebar i{display:block;width:118px;height:5px;border-radius:999px;background:var(--outline)}
+
+  .search{display:flex;align-items:center;gap:11px;height:48px;border-radius:15px;background:var(--container);border:1px solid var(--outline);padding:0 14px;color:var(--muted);font-size:15px;flex:0 0 auto}
+  .search .ic{color:var(--muted)}
+  .filterbtn{display:inline-flex;align-items:center;gap:8px;height:42px;padding:0 15px;border-radius:999px;background:var(--accentContainer);color:var(--onAccentContainer);font-size:14px;font-weight:600}
+  .filterbtn .ic{width:18px;height:18px}
+  .chips{display:flex;gap:8px;flex-wrap:nowrap;overflow:hidden}
+  .lrow{display:flex;align-items:center;gap:13px;padding:12px 13px;background:var(--container);border:1px solid var(--outline);border-radius:16px}
+
+  .seg{display:flex;gap:4px;background:var(--container);border:1px solid var(--outline);border-radius:999px;padding:4px;flex:0 0 auto}
+  .seg>div{flex:1;text-align:center;padding:9px 0;border-radius:999px;font-size:13.5px;font-weight:600;color:var(--muted)}
+  .seg>div.on{background:var(--accentContainer);color:var(--onAccentContainer)}
+
+  .tabs{display:flex;border-bottom:1px solid var(--outline);flex:0 0 auto}
+  .tabs>div{flex:1;text-align:center;padding:14px 0;font-size:13.5px;font-weight:600;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:6px}
+  .tabs>div.on{color:var(--accent)}
+  .tabs>div .bar{height:3px;width:100%;background:transparent;margin-bottom:-16px}
+  .tabs>div.on .bar{background:var(--accent);border-radius:2px 2px 0 0}
+
+  .sechead{color:var(--accent);font-size:13.5px;font-weight:700;padding:16px 2px 9px;border-bottom:1px solid var(--outline);margin-bottom:4px}
+  .srow{display:flex;align-items:center;gap:15px;padding:15px 3px;border-bottom:1px solid rgba(128,128,128,.14)}
+  .srow .ic{width:23px;height:23px;color:var(--muted)}
+  .chev{color:var(--muted);flex:0 0 auto}
+
+  .sec{font-size:13px;font-weight:700;color:var(--accent);letter-spacing:.5px;margin:18px 0 6px}
+  .TF{position:relative;margin-top:16px}
+  .TF .lbl{position:absolute;top:-8px;left:12px;background:var(--bg);padding:0 6px;font-size:12px;color:var(--muted)}
+  .TF .inp{border:1.5px solid var(--outline);border-radius:14px;padding:14px;min-height:52px;display:flex;align-items:center;font-size:16px;color:var(--text)}
+  .TF.focus .lbl{color:var(--accent)}
+  .TF.focus .inp{border-color:var(--accent)}
+  .TF .ph{color:var(--muted)}
+  .TF .helper{font-size:12px;color:var(--muted);margin-top:6px;padding-left:4px}
+  .photoframe{width:100%;aspect-ratio:1.585;border-radius:16px;background:var(--variant);border:1px solid var(--outline);overflow:hidden;position:relative}
+  .photoframe img{width:100%;height:100%;object-fit:cover}
+  .ovl{position:absolute;right:8px;top:8px;width:38px;height:38px;border-radius:12px;background:rgba(0,0,0,.5);display:grid;place-items:center;color:#fff}
+  .stickycta{flex:0 0 auto;padding:12px 16px 14px;border-top:1px solid var(--outline);background:var(--bg)}
+
+  .hero{background:var(--container);border:1px solid var(--outline);border-radius:18px;padding:16px;display:flex;gap:15px;align-items:center}
+  .kv{display:flex;justify-content:space-between;gap:14px;padding:12px 0;border-bottom:1px solid rgba(128,128,128,.12);font-size:14.5px}
+  .kv:last-child{border-bottom:0}
+  .kv .k{color:var(--muted)}
+  .kv .v{font-weight:600;text-align:right}
+
+  .statgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .stat{background:var(--container);border:1px solid var(--outline);border-radius:16px;padding:15px}
+  .stat .top{display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:600}
+  .stat .num{font-size:21px;font-weight:700;margin-top:10px;font-variant-numeric:tabular-nums}
+
+  .modes{display:flex;gap:9px}
+  .mode{flex:1;height:58px;border-radius:14px;border:1.5px solid var(--outline);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;font-size:12.5px;font-weight:600;color:var(--muted)}
+  .mode.on{border-color:var(--accent);color:var(--text);background:var(--accentContainer)}
+  .swatchgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px 10px}
+  .sw{display:flex;flex-direction:column;align-items:center;gap:7px;font-size:11px;color:var(--muted)}
+  .sw i{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;color:#0b1220}
+  .sw.on i{box-shadow:0 0 0 3px var(--bg),0 0 0 5px var(--accent)}
+
+  .month{display:flex;align-items:center;justify-content:space-between;gap:10px}
+  .month b{font-size:15px;font-weight:600}
+
+  .sheet{position:absolute;left:0;right:0;bottom:0;background:var(--containerHigh);border-top:1px solid var(--outline);border-radius:22px 22px 0 0;padding:12px 16px 20px;z-index:8;box-shadow:0 -14px 34px rgba(0,0,0,.5)}
+  .grabber{width:38px;height:4px;border-radius:999px;background:var(--outline);margin:2px auto 14px}
+  .sheetrow{display:flex;align-items:center;gap:15px;padding:14px 4px;border-bottom:1px solid rgba(128,128,128,.12)}
+  .sheetrow:last-child{border-bottom:0}
+  .scrim{position:absolute;inset:0;background:rgba(0,0,0,.45);z-index:7}
+
+  .dlg{position:absolute;left:18px;right:18px;top:50%;transform:translateY(-50%);background:var(--containerHigh);border:1px solid var(--outline);border-radius:24px;padding:22px;z-index:8;box-shadow:0 20px 50px rgba(0,0,0,.6)}
+  .dlg.wide{left:14px;right:14px;padding:20px}
+
+  .banner{position:absolute;left:0;right:0;top:32px;background:#5b1f1f;border-bottom:1px solid #7f2a2a;color:#ffd9d9;display:flex;align-items:center;gap:10px;padding:10px 16px;z-index:9;font-size:13.5px}
+  .toast{position:absolute;left:50%;transform:translateX(-50%);bottom:118px;background:#2b3236;color:#EDF1F5;border-radius:12px;padding:12px 18px;font-size:13.5px;z-index:9;box-shadow:0 8px 20px rgba(0,0,0,.5)}
+
+  .phone > .content{min-height:0;overflow-y:auto!important}
+  .phone > .content > *{flex-shrink:0}
+  .stickycta.row > .btn.block{flex:1;min-width:0;width:auto}
+  .dlg{max-height:calc(100% - 64px);overflow-y:auto}
+
+  /* ===== kwitansi ===== */
+  .receipt{background:var(--container);border:1px solid var(--outline);border-radius:18px;padding:18px}
+  .rc-brand{width:52px;height:52px;border-radius:16px;background:var(--accentContainer);display:grid;place-items:center;color:var(--accent);margin:0 auto}
+  .dash{border-top:1.5px dashed var(--outline);margin:14px 0}
+  .stamp{display:inline-block;padding:5px 14px;border:2px solid var(--green);color:var(--green);border-radius:9px;font-weight:800;letter-spacing:2px;font-size:13px;transform:rotate(-3deg)}
+  .perf{height:12px;background:
+     radial-gradient(circle at 6px 0, var(--bg) 6px, transparent 6.5px) repeat-x;
+     background-size:18px 12px;margin:0 -18px}
+
+  .kbd{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:8px}
+  .kbd span{background:var(--variant);border-radius:8px;height:34px;display:grid;place-items:center;font-size:13px;color:var(--text)}
+
+  /* anatomi labels */
+  .anat{position:absolute;display:flex;align-items:center;gap:6px;z-index:10;font-size:11px;color:#0B1220;font-weight:700}
+  .anat .n{width:20px;height:20px;border-radius:50%;background:#93C5FD;color:#0B1220;display:grid;place-items:center;flex:0 0 auto}
+  .anat .lab{background:#93C5FD;border-radius:6px;padding:3px 8px;white-space:nowrap}
+  .legend{counter-reset:n;display:flex;flex-direction:column;gap:7px;margin-top:6px}
+  .legend div{font-size:12.5px;color:#C9CED6;display:flex;gap:8px;align-items:flex-start}
+  .legend span{background:#93C5FD;color:#0B1220;font-weight:700;width:20px;height:20px;border-radius:50%;display:grid;place-items:center;flex:0 0 auto;font-size:11px}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-people" viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></symbol>
+  <symbol id="i-loc" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></symbol>
+  <symbol id="i-wallet" viewBox="0 0 24 24"><path d="M21 18v1c0 1.1-.9 2-2 2H5c-1.11 0-2-.9-2-2V5c0-1.1.89-2 2-2h14c1.1 0 2 .9 2 2v1h-9c-1.11 0-2 .9-2 2v8c0 1.1.89 2 2 2h9zm-9-2h10V8H12v8zm4-2.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></symbol>
+  <symbol id="i-settings" viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94s-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></symbol>
+  <symbol id="i-filter" viewBox="0 0 24 24"><path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"/></symbol>
+  <symbol id="i-edit" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.996.996 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></symbol>
+  <symbol id="i-del" viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><path d="M20 3h-1V1h-2v2H7V1H5v2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H4V8h16v13z"/></symbol>
+  <symbol id="i-tag" viewBox="0 0 24 24"><path d="M17.63 5.84C17.27 5.33 16.67 5 16 5L5 5.01C3.9 5.01 3 5.9 3 7v10c0 1.1.9 1.99 2 1.99L16 19c.67 0 1.27-.33 1.63-.84L22 12l-4.37-6.16z"/></symbol>
+  <symbol id="i-palette" viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9c.83 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.01-.23-.26-.38-.61-.38-.99 0-.83.67-1.5 1.5-1.5H16c2.76 0 5-2.24 5-5 0-4.42-4.03-8-9-8zm-5.5 9c-.83 0-1.5-.67-1.5-1.5S5.67 9 6.5 9 8 9.67 8 10.5 7.33 12 6.5 12zm3-4C8.67 8 8 7.33 8 6.5S8.67 5 9.5 5s1.5.67 1.5 1.5S10.33 8 9.5 8zm5 0c-.83 0-1.5-.67-1.5-1.5S13.67 5 14.5 5s1.5.67 1.5 1.5S15.33 8 14.5 8zm3 4c-.83 0-1.5-.67-1.5-1.5S16.67 9 17.5 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></symbol>
+  <symbol id="i-hist" viewBox="0 0 24 24"><path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.25 2.52.77-1.28-3.52-2.09V8z"/></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24"><path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="M16 18l2.29-2.29-4.88-4.88-4 4L2 7.41 3.41 6l6 6 4-4 6.3 6.29L22 12v6z"/></symbol>
+  <symbol id="i-list" viewBox="0 0 24 24"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24"><path d="M4 11h5V5H4v6zm0 7h5v-6H4v6zm7 0h5V5h-5v13zm7 0h5v-6h-5v6zm0-13v6h5V5h-5z"/></symbol>
+  <symbol id="i-more" viewBox="0 0 24 24"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></symbol>
+  <symbol id="i-cam" viewBox="0 0 24 24"><path d="M9 2L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-3.17L15 2H9zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></symbol>
+  <symbol id="i-chevL" viewBox="0 0 24 24"><path d="M14 6l-6 6 6 6 1.41-1.41L10.83 12l4.58-4.59z"/></symbol>
+  <symbol id="i-exit" viewBox="0 0 24 24"><path d="M10.09 15.59L11.5 17l5-5-5-5-1.41 1.41L12.67 11H3v2h9.67l-2.58 2.59zM19 3H5c-1.11 0-2 .9-2 2v4h2V5h14v14H5v-4H3v4c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></symbol>
+  <symbol id="i-swap" viewBox="0 0 24 24"><path d="M6.99 11L3 15l3.99 4v-3H14v-2H6.99v-3zM21 9l-3.99-4v3H10v2h7.01v3L21 9z"/></symbol>
+  <symbol id="i-repeat" viewBox="0 0 24 24"><path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z"/></symbol>
+  <symbol id="i-share" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"/></symbol>
+  <symbol id="i-print" viewBox="0 0 24 24"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></symbol>
+  <symbol id="i-doc" viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></symbol>
+  <symbol id="i-priv" viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></symbol>
+  <symbol id="i-help" viewBox="0 0 24 24"><path d="M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z"/></symbol>
+  <symbol id="i-key" viewBox="0 0 24 24"><path d="M12.65 10C11.83 7.67 9.61 6 7 6c-3.31 0-6 2.69-6 6s2.69 6 6 6c2.61 0 4.83-1.67 5.65-4H17v4h4v-4h2v-4H12.65zM7 14c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/></symbol>
+  <symbol id="i-money" viewBox="0 0 24 24"><path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/></symbol>
+  <symbol id="i-house" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></symbol>
+  <symbol id="i-image" viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></symbol>
+</svg>
+
+<div class="doc">
+  <h1>Kostku — Mockup lengkap</h1>
+  <p class="lead">Mockup <b>visual</b> (bukan aplikasi asli) berisi <b>seluruh layar</b> + <b>spesifikasi ukuran</b> dalam <b>satu file</b>. Warna &amp; ukuran mengikuti kode asli (<code>Dimens.kt</code>, <code>Theme.kt</code>, <code>Type.kt</code>). Contoh memakai data nyata: <b>wasd</b> &amp; <b>Miraya Kos</b>, penghuni <b>Nayla</b>, sewa <b>Rp 1.111</b>. Bagian bertanda <b>BARU</b> adalah tambahan: <b>kwitansi</b>, <b>pindah kamar</b>, <b>perpanjang kos</b>, <b>tambah tipe kamar</b>, <b>catat pemasukan/pengeluaran</b>, dan <b>detail lokasi 3 tab</b> (Dashboard / Kamar / Pembayaran) + <b>Pengaturan</b> lokasi untuk mengatur tipe &amp; nomor kamar.</p>
+
+  <!-- ============ TOKENS ============ -->
+  <h2 class="sec">0. Spesifikasi &amp; token <small>ukuran asli dari kode</small></h2>
+  <div class="tokens">
+    <div class="tbox">
+      <h4>Warna — mode Gelap</h4>
+      <div class="sw-row">
+        <div class="swx"><i style="background:#121316"></i>bg</div>
+        <div class="swx"><i style="background:#1B1D21"></i>kartu</div>
+        <div class="swx"><i style="background:#272A2F"></i>variant</div>
+        <div class="swx"><i style="background:#33373E"></i>outline</div>
+        <div class="swx"><i style="background:#93C5FD"></i>aksen</div>
+        <div class="swx"><i style="background:#33455C"></i>aksen-ctr</div>
+        <div class="swx"><i style="background:#E7E9EE"></i>teks</div>
+        <div class="swx"><i style="background:#9AA1AC"></i>muted</div>
+      </div>
+    </div>
+    <div class="tbox">
+      <h4>Jarak (Spacing)</h4>
+      <div class="kvlist">
+        <div><span>xs</span><b>4 dp</b></div>
+        <div><span>sm</span><b>8 dp</b></div>
+        <div><span>md</span><b>12 dp</b></div>
+        <div><span>lg</span><b>16 dp</b></div>
+        <div><span>xl</span><b>20 dp</b></div>
+        <div><span>xxl</span><b>24 dp</b></div>
+      </div>
+    </div>
+    <div class="tbox">
+      <h4>Ukuran kunci (Screen/Dimens)</h4>
+      <div class="kvlist">
+        <div><span>Tepi layar (edge)</span><b>16 dp</b></div>
+        <div><span>Jarak antar blok (gap)</span><b>12 dp</b></div>
+        <div><span>Tinggi tombol utama</span><b>52 dp</b></div>
+        <div><span>Sudut bidang isian</span><b>14 dp</b></div>
+        <div><span>Radius kartu</span><b>16 dp</b></div>
+        <div><span>Clearance FAB</span><b>96 dp</b></div>
+        <div><span>Foto bundar (baris)</span><b>52 dp</b></div>
+        <div><span>Area sentuh minimum</span><b>48 dp</b></div>
+      </div>
+    </div>
+    <div class="tbox">
+      <h4>Tipografi</h4>
+      <div class="kvlist">
+        <div><span>headlineSmall</span><b>24 / SemiBold</b></div>
+        <div><span>titleLarge (judul tab)</span><b>22 / SemiBold</b></div>
+        <div><span>titleMedium</span><b>16 / SemiBold</b></div>
+        <div><span>bodyLarge</span><b>16 / Regular</b></div>
+        <div><span>labelSmall (catatan)</span><b>11 / Regular</b></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ANATOMI -->
+  <h2 class="sec">1. Anatomi layar <small>di mana ukuran dipakai</small></h2>
+  <div class="grid">
+    <div class="frame">
+      <div class="phonewrap">
+        <div class="phone" id="anat">
+          <div class="statusbar"><span>4:00</span><span>▮▮▮ ⌾ ▰</span></div>
+          <div class="appbar"><h3>Penghuni</h3><div class="grow"></div><div class="filterbtn"><svg class="ic"><use href="#i-filter"/></svg>Filter</div></div>
+          <div class="content g12">
+            <div class="search"><svg class="ic"><use href="#i-search"/></svg> Cari nama atau kamar…</div>
+            <div class="stack g12">
+              <div class="lrow">
+                <span class="avatar" style="background:linear-gradient(#cfe8a0,#6ba43a)"></span>
+                <div class="grow stack" style="gap:3px"><div class="t16 w6">Nayla</div><div class="t13 muted trunc">123 • Kamar 1 • wasd</div></div>
+                <div class="chip ok">Sisa 31 hari</div>
+              </div>
+              <div class="lrow">
+                <span class="avatar"></span>
+                <div class="grow stack" style="gap:3px"><div class="t16 w6">Budiono</div><div class="t13 muted trunc">0812 • Kamar 3 • Miraya Kos</div></div>
+                <div class="chip warn">Sisa 12 hari</div>
+              </div>
+            </div>
+          </div>
+          <div class="navbar" data-active="0"></div>
+          <div class="homebar"><i></i></div>
+        </div>
+        <div class="anat" style="left:calc(100% + 6px);top:70px"><span class="n">1</span></div>
+        <div class="anat" style="left:calc(100% + 6px);top:118px"><span class="n">2</span></div>
+        <div class="anat" style="left:6px;top:250px"><span class="n">3</span></div>
+        <div class="anat" style="left:calc(100% + 6px);top:238px"><span class="n">4</span></div>
+        <div class="anat" style="left:calc(100% + 6px);top:300px"><span class="n">5</span></div>
+        <div class="anat" style="left:calc(100% + 6px);top:330px"><span class="n">7</span></div>
+        <div class="anat" style="left:calc(100% + 6px);top:585px"><span class="n">6</span></div>
+      </div>
+      <div class="cap"><b>Anatomi</b><span class="size">Layar 360–412 × 800–915 dp</span></div>
+    </div>
+    <div class="frame" style="width:520px">
+      <div class="legend">
+        <div><span>1</span> <b>App bar 56 dp</b> — judul 22dp SemiBold, satu baris, ikon aksi di kanan. Status bar (sistem) di atasnya.</div>
+        <div><span>2</span> <b>Search 48 dp</b> — radius 15dp, ikon di kiri, tinggi 48dp (mudah disentuh).</div>
+        <div><span>3</span> <b>Tepi layar &amp; jarak 16 / 12 dp</b> — semua konten punya tepi 16dp; jarak antar kartu 12dp (konsisten).</div>
+        <div><span>4</span> <b>Foto bundar 52 dp</b> — selalu lingkaran di luar pratinjau penuh; clip + crop.</div>
+        <div><span>5</span> <b>Radius kartu 16 dp</b>, isi 15dp, border 1dp tipis. Judul 16dp SemiBold, subjudul 13dp abu.</div>
+        <div><span>6</span> <b>Nav bar 80 dp</b> — 4 tujuan; item aktif = pil aksen. FAB minimum 96dp dari bawah.</div>
+        <div><span>7</span> <b>Chip sisa hari</b> — pil kecil: ≥14 hari (hijau), 7–13 (kuning), &lt;7 (merah). Angka sisa sewa.</div>
+      </div>
+      <div class="cap" style="text-align:left">
+        Aturan utama: <b>satu sistem</b> — token jarak yang sama, judul sejajar, tombol satu siluet, tidak ada elemen berdempetan.
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ AUTH ============ -->
+  <h2 class="sec">2. Masuk</h2>
+  <div class="grid">
+    <div class="frame">
+      <div class="phone">
+        <div class="statusbar"><span>4:00</span><span>▮▮▮ ⌾ ▰</span></div>
+        <div class="content" style="justify-content:center;gap:22px;padding:0 24px">
+          <div class="stack center" style="gap:10px">
+            <div style="width:76px;height:76px;border-radius:24px;background:var(--accentContainer);display:grid;place-items:center"><svg class="ic lg" style="width:38px;height:38px;color:var(--accent)"><use href="#i-loc"/></svg></div>
+            <div class="t22 w7">Kostku</div>
+            <div class="t13 muted">Kelola kos Anda lebih mudah</div>
+          </div>
+          <div class="btn primary block"><svg class="ic"><use href="#i-people"/></svg>Masuk dengan Google</div>
+          <div class="t11 muted center">Dengan masuk, Anda menyetujui Ketentuan &amp; Kebijakan Privasi.</div>
+        </div>
+        <div class="homebar"><i></i></div>
+      </div>
+      <div class="cap"><b>Masuk</b><br>logo, tombol masuk, catatan kecil<span class="size">Tombol 52 dp</span></div>
+    </div>
+  </div>
+
+  <!-- ============ PENGHUNI ============ -->
+  <h2 class="sec">3. Tab Penghuni</h2>
+  <div class="grid">
+    <!-- 3.1 list -->
+    <div class="frame">
+      <div class="phone">
+        <div class="statusbar"><span>4:00</span><span>▮▮▮ ⌾ ▰</span></div>
+        <div class="appbar"><h3>Penghuni</h3><div class="grow"></div><div class="filterbtn"><svg class="ic"><use href="#i-filter"/></svg>Filter</div></div>
+        <div class="content g12">
+          <div class="search"><svg class="ic"><use href="#i-search"/></svg> Cari nama atau kamar…</div>
+          <div class="scroll g12">
+            <div class="lrow">
+              <span class="avatar" style="background:linear-gradient(#cfe8a0,#6ba43a)"></span>
+              <div class="grow stack" style="gap:3px"><div class="t16 w6">Nayla</div><div class="t13 muted trunc">123 • Kamar 1 • wasd</div></div>
+              <div class="chip ok">Sisa 31 hari</div>
+            </div>
+            <div class="lrow">
+              <span class="avatar"></span>
+              <div class="grow stack" style="gap:3px"><div class="t16 w6">Budiono</div><div class="t13 muted trunc">0812 • Kamar 3 • Miraya Kos</div></div>
+              <div class="chip warn">Sisa 12 hari</div>
+            </div>
+            <div class="lrow">
+              <span class="avatar"></span>
+              <div class="grow stack" style="gap:3px"><div class="t16 w6">Siti Aminah</div><div class="t13 muted trunc">0857 • Kamar 5 • wasd</div></div>
+              <div class="chip err">Sisa 4 hari</div>
+            </div>
+          </div>
+        </div>
+        <div class="fab"><svg class="ic"><use href="#i-plus"/></svg></div>
+        <div class="navbar" data-active="0"></div>
+        <div class="homebar"><i></i></div>
+      </div>
+      <div class="cap"><b>3.1 Daftar penghuni</b><span class="size">Baris 76 dp • foto 52 dp</span></div>
+    </div>
+
+    <!-- 3.2 empty -->
+    <div class="frame">
+      <div class="phone">
+        <div class="statusbar"><span>4:00</span><span>▮▮▮ ⌾ ▰</span></div>
+        <div class="appbar"><h3>Penghuni</h3><div class="grow"></div><div class="filterbtn"><svg class="ic"><use href="#i-filter"/></svg>Filter</div></div>
+        <div class="content">
+          <div class="search"><svg class="ic"><use href="#i-search"/></svg> Cari nama atau kamar…</div>
+          <div class="grow stack center" style="gap:12px;padding:0 20px">
+            <div style="width:84px;height:84px;border-radius:26px;background:var(--variant);display:grid;place-items:center"><svg class="ic lg" style="width:40px;height:40px;color:var(--muted)"><use href="#i-people"/></svg></div>
+            <div class="t16 w6">Belum ada penghuni</div>
+            <div class="t13 muted">Tekan tombol + untuk menambah penghuni pertama.</div>
+            <div class="btn tonal" style="margin-top:4px"><svg class="ic"><use href="#i-plus"/></svg>Tambah penghuni</div>
+          </div>
+        </div>
+        <div class="navbar" data-active="0"></div>
+        <div class="homebar"><i></i></div>
+      </div>
+      <div class="cap"><b>3.2 Keadaan kosong</b><span class="size">Ikon 84 dp</span></div>
+    </div>
+
+    <!-- 3.3 detail informasi -->
+    <div class="frame">
+      <div class="phone">
+        <div class="statusbar"><span>4:00</span><span>▮▮▮ ⌾ ▰</span></div>
+        <div class="appbar"><div class="iconbtn plain"><svg class="ic"><use href="#i-back"/></svg></div><h3>Nayla</h3></div>
+        <div class="tabs"><div class="on">Informasi<div class="bar"></div></div><div>Pembayaran<div class="bar"></div></div><div>Log<div class="bar"></div></div></div>
+        <div class="content g12">
+          <div class="hero"><span class="avatar lg" style="background:linear-gradient(#cfe8a0,#6ba43a)"></span><div class="stack" style="gap:6px"><div class="t16 w6">Nayla</div><div class="chip ok">Sisa 31 hari</div><div class="t13 muted">Kamar 1 • wasd</div></div></div>
+          <div class="card">
+            <div class="kv"><span class="k">Nomor HP</span><span class="v">123</span></div>
+            <div class="kv"><span class="k">Kamar</span><span class="v">Kamar 1</span></div>
+            <div class="kv"><span class="k">Tipe kamar</span><span class="v">wasd</span></div>
+            <div class="kv"><span class="k">Tanggal masuk</span><span class="v">11 Okt 2026</span></div>
+            <div class="sec">UTILITAS KAMAR</div>
+            <div class="kv"><span class="k">Nomor token listrik</span><span class="v">1234 5678 9012</span></div>
+            <div class="kv"><span class="k">Nomor PDAM</span><span class="v muted" style="font-weight:400">Tidak tersedia</span></div>
+            <div class="sec">UTILITAS LOKASI</div>
+            <div class="kv"><span class="k">Nomor token listrik</span><span class="v">5566 7788 9900</span></div>
+            <div class="kv"><span class="k">Nomor PDAM</span><span class="v">99887766</span></div>
+          </div>
+        </div>
+        <div class="fab sm"><svg class="ic"><use href="#i-settings"/></svg></div>
+        <div class="homebar"><i></i></div>
+      </div>
+      <div class="cap"><b>3.3 Detail — Informasi</b><span class="size">Tab strip 52 dp</span></div>
+    </div>
+
+    <!-- 3.4 detail pembayaran -->
+    <div class="frame">
+      <div class="phone">
+        <div class="statusbar"><span>4:00</span><span>▮▮▮ ⌾ ▰</span></div>
+        <div class="appbar"><div class="iconbtn plain"><svg class="ic"><use href="#i-back"/></svg></div><h3>Nayla</h3></div>
+        <div class="tabs"><div>Informasi<div class="bar"></div></div><div class="on">Pembayaran<div class="bar"></div></div><div>Log<div class="bar"></div></div></div>
+        <div class="content g12">
+          <div class="lrow">
+            <span class="avatar sm" style="background:var(--accentContainer);color:var(--accent)"><svg class="ic"><use href="#i-up"/></svg></span>
+            <div class="grow stack" style="gap:3px"><div class="t16 w6 hi">Rp 1.111</div><div class="t13 muted trunc">Pemasukan • Sewa • Lunas • 01 Okt 2026</div></div>
+            <div class="iconbtn plain"><svg class="ic"><use href="#i-doc"/></svg></div>
+          </div>
+          <div class="card row g12" style="border-style:dashed"><svg class="ic" style="color:var(--accent)"><use href="#i-doc"/></svg><div class="grow t14">Ketuk ikut untuk melihat <b>kwitansi</b></div><svg class="ic chev"><use href="#i-chev"/></svg></div>
+        </div>
+        <div class="fab sm"><svg class="ic"><use href="#i-settings"/></svg></div>
+        <div class="homebar"><i></i></div>
+      </div>
+      <div class="cap"><b>3.4 Detail — Pembayaran</b><span class="size">Membuka kwitansi</span></div>
+    </div>
+
+    <!-- 3.5 detail log -->
+    <div class="frame">
+      <div class="phone">
+        <div class="statusbar"><span>4:00</span><span>▮▮▮ ⌾ ▰</span></div>
+        <div class="appbar"><div class="iconbtn plain"><svg class="ic"><use href="#i-back"/></svg></div><h3>Nayla</h3></div>
+        <div class="tabs"><div>Informasi<div class="bar"></div></div><div>Pembayaran<div class="bar"></div></div><div class="on">Log<div class="bar"></div></div></div>
+        <div class="content g12">
+          <div class="card stack g4">
+            <div class="t14 w6">Penghuni dibuat</div>
+            <div class="t12 muted">11 Okt 2026 • 09:14</div>
+          </div>
+          <div class="card stack g4">
+            <div class="t14 w6">Data diperbarui</div>
+            <div class="t12 muted">11 Okt 2026 • 10:02 — nama, nomor HP</div>
+          </div>
+        </div>
+        <div class="fab sm"><svg class="ic"><use href="#i-settings"/></svg></div>
+        <div class="homebar"><i></i></div>
+      </div>
+      <div class="cap"><b>3.5 Detail — Log perubahan</b></div>
+    </div>
+
+    <!-- 3.6 kelola sheet -->
+    <div class="frame">
+      <div class="phone">
+        <div class="statusbar"><span>4:00</span><span>▮▮▮ ⌾ ▰</span></div>
+        <div class="appbar"><div class="iconbtn plain"><svg class="ic"><use href="#i-back"/></svg></div><h3>Nayla</h3></div>
+        <div class="tabs"><div class="on">Informasi<div class="bar"></div></div><div>Pembayaran<div class="bar"></div></div><div>Log<div class="bar"></div></div></div>
+        <div class="content g12"><div class="hero"><span class="avatar lg" style="background:linear-gradient(#cfe8a0,#6ba43a)"></span><div class="stack" style="gap:6px"><div class="t16 w6">Nayla</div><div class="chip ok">Sisa 31 hari</div></div></div></div>
+        <div class="scrim"></div>
+        <div class="sheet">
+          <div class="grabber"></div>
+          <div class="t16 w6" style="padding:0 4px 6px">Kelola penghuni</div>
+          <div class="sheetrow"><svg class="ic" style="color:var(--accent)"><use href="#i-edit"/></svg><div class="grow stack" style="gap:2px"><div class="t15 w6">Edit data</div><div class="t12 muted">Ubah nama, kontak, dan foto</div></div></div>
+          <div class="sheetrow"><svg class="ic" style="color:var(--accent)"><use href="#i-repeat"/></svg><div class="grow stack" style="gap:2px"><div class="t15 w6">Perpanjang kos</div><div class="t12 muted">Tambah durasi sewa &amp; perbarui harga</div></div></div>
+          <div class="sheetrow"><svg class="ic" style="color:var(--accent)"><use href="#i-swap"/></svg><div class="grow stack" style="gap:2px"><div class="t15 w6">Pindah kamar</div><div class="t12 muted">Pindahkan ke kamar lain di lokasi ini</div></div></div>
+          <div class="sheetrow"><svg class="ic" style="color:var(--accent)"><use href="#i-cal"/></svg><div class="grow stack" style="gap:2px"><div class="t15 w6">Pindah tanggal</div><div class="t12 muted">Ubah tanggal masuk &amp; keluar</div></div></div>
+          <div class="sheetrow"><svg class="ic" style="color:var(--amber)"><use href="#i-exit"/></svg><div class="grow stack" style="gap:2px"><div class="t15 w6">Penghuni keluar</div><div class="t12 muted">Tandai keluar &amp; arsipkan</div></div></div>
+        </div>
+        <div class="homebar"><i></i></div>
+      </div>
+      <div class="cap"><b>3.6 Sheet “Kelola penghuni”</b><span class="size">Radius atas 22 dp</span></div>
+    </div>
+
+    <!-- 3.7 add form -->
+    <div class="frame">
+      <div class="phone">
+        <div class="statusbar"><span>4:00</span><span>▮▮▮ ⌾ ▰</span></div>
+        <div class="appbar"><div class="iconbtn plain"><svg class="ic"><use href="#i-back"/></svg></div><h3>Tambah penghuni</h3></div>
+        <div class="content" style="overflow:hidden">
+          <div class="sec" style="margin-top:4px">DATA PENGHUNI</div>
+          <div class="TF focus"><span class="lbl">Nama lengkap *</span><div class="inp"><span class="ph">Nama penghuni</span></div></div>
+          <div class="TF"><span class="lbl">Nomor HP</span><div class="inp"><span class="ph">08xx</span></div></div>
+          <div class="sec">PENEMPATAN</div>
+          <div class="TF"><span class="lbl">Lokasi kos *</span><div class="inp">wasd <span class="grow"></span><svg class="ic xs muted"><use href="#i-chev"/></svg></div></div>
+          <div class="TF"><span class="lbl">Tipe kamar *</span><div class="inp">wasd <span class="grow"></span><svg class="ic xs muted"><use href="#i-chev"/></svg></div></div>
+          <div class="sec">SEWA</div>
+          <div class="TF"><span class="lbl">Durasi *</span><div class="inp">1 bulan <span class="grow"></span><svg class="ic xs muted"><use href="#i-chev"/></svg></div></div>
+        </div>
+        <div class="stickycta"><div class="btn primary block"><svg class="ic"><use href="#i-check"/></svg>Simpan penghuni</div></div>
+        <div class="homebar"><i></i></div>
+      </div>
+      <div class="cap"><b>3.7 Form tambah penghuni</b><span class="size">Bidang 52 dp • sudut 14 dp</span></div>
+    </div>
+
+    <!-- 3.8 edit form -->
+    <div class="frame">
+      <div class="phone">
+        <div class="statusbar"><span>4:00</span><span>▮▮▮ ⌾ ▰</span></div>
+        <div class="appbar"><div class="iconbtn plain"><svg class="ic"><use href="#i-back"/></svg></div><h3>Edit data penghuni</h3></div>
+        <div class="content" style="overflow:hidden">
+          <div class="sec" style="margin-top:4px">DATA PENGHUNI</div>
+          <div class="TF focus"><span class="lbl">Nama lengkap *</span><div class="inp">Nayla</div></div>
+          <div class="TF"><span class="lbl">Nomor HP</span><div class="inp">123</div></div>
+          <div class="sec">FOTO PENGHUNI</div>
+          <div class="photoframe"><img src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='190'%3E%3Crect width='300' height='190' fill='%23cfe8a0'/%3E%3Crect x='60' y='60' width='240' height='40' fill='%23c9b48a'/%3E%3Crect y='96' width='300' height='94' fill='%234a7d2c'/%3E%3C/svg%3E"><div class="ovl"><svg class="ic sm"><use href="#i-more"/></svg></div></div>
+          <div class="t11 muted">Kosongkan lalu simpan untuk menghapus foto.</div>
+        </div>
+        <div class="stickycta"><div class="btn primary block">Simpan perubahan</div></div>
+        <div class="homebar"><i></i></div>
+      </div>
+      <div class="cap"><b>3.8 Form edit penghuni</b><span class="size">Bingkai foto rasio 85,6:54</span></div>
+    </div>
+  </div>
+
+  <!-- ============ PENGHUNI — AKSI (BARU) ============ -->
+  <h2 class="sec new">3b. Aksi penghuni — pindah &amp; perpanjang <small>baru</small></h2>
+  <div class="grid">
+    <!-- 3.9 pindah kamar -->
+    <div class="frame">
+      <div class="phone">
+        <div class="statusbar"><span>4:00</span><span>▮▮▮ ⌾ ▰</span></div>
+        <div class="appbar"><div class="iconbtn plain"><svg class="ic"><use href="#i-back"/></svg></div><h3>Pindah kamar</h3></div>
+        <div class="content">
+          <div class="card">
+            <div class="kv" style="padding-top:0"><span class="k">Kamar saat ini</span><span class="v">wasd • Kamar 1</span></div>
+          </div>
+          <div class="card stack g12" style="border-color:var(--accent)">
+            <div class="sec" style="margin:0">KAMAR TUJUAN</div>
+            <div class="lrow" style="background:transparent;border:0;padding:0"><span class="avatar xs" style="background:var(--accentContainer);color:var(--accent)"><svg class="ic sm"><use href="#i-key"/></svg></span><div class="grow stack" style="gap:2px"><div class="t15 w6">wasd • Kamar 2</div><div class="t12 muted">Tersedia • Tipe wasd</div></div><svg class="ic sm" style="color:var(--accent)"><use href="#i-check"/></svg></div>
+            <div class="lrow" style="background:transparent;border:0;padding:0;opacity:.55"><span class="avatar xs"></span><div class="grow stack" style="gap:2px"><div class="t15 w6">wasd • Kamar 4</div><div class="t12 muted">Tersedia • Tipe wasd</div></div></div>
+            <div class="t11 muted">Hanya kamar kosong yang dapat dipilih.</div>
+          </div>
+          <div class="card row g12" style="border-style:dashed"><svg class="ic" style="color:var(--amber)"><use href="#i-info"/></svg><div class="grow t13 muted">Penghuni &amp; sewa tetap; hanya kamar yang berpindah.</div></div>
+        </div>
+        <div class="stickycta"><div class="btn primary block"><svg class="ic"><use href="#i-swap"/></svg>Pindahkan</div></div>
+        <div class="homebar"><i></i></div>
+      </div>
+      <div class="cap"><b>3.9 Pindah kamar</b><br>pilih kamar kosong<span class="size">CTA 52 dp • satu siluet</span></div>
+    </div>
+
+    <!-- 3.10 perpanjang -->
+    <div class="frame">
+      <div class="phone">
+        <div class="statusbar"><span>4:00</span><span>▮▮▮ ⌾ ▰</span></div>
+        <div class="appbar"><div class="iconbtn plain"><svg class="ic"><use href="#i-back"/></svg></div><h3>Perpanjang kos</h3></div>
+        <div class="content" style="overflow:hidden;gap:12px">
+          <div class="card">
+            <div class="kv" style="padding-top:0"><span class="k">Tanggal keluar saat ini</span><span class="v">15 Nov 2026</span></div>
+          </div>
+          <div class="TF" style="margin-top:12px"><span class="lbl">Jumlah penghuni</span><div class="inp">1 orang <span class="grow"></span><svg class="ic xs muted"><use href="#i-chev"/></svg></div></div>
+          <div class="TF"><span class="lbl">Durasi perpanjangan</span><div class="inp">1 bulan <span class="grow"></span><svg class="ic xs muted"><use href="#i-chev"/></svg></div></div>
+          <div class="card stack g4" style="background:var(--accentContainer);border-color:transparent">
+            <div class="t12 w6" style="color:var(--onAccentContainer)">TANGGAL KELUAR BARU</div>
+            <div class="t20 w7" style="color:var(--onAccentContainer)">15 Des 2026</div>
+            <div class="t12" style="color:var(--onAccentContainer);opacity:.85">Sisa 65 hari dari hari ini</div>
+          </div>
+          <div class="sec" style="margin:6px 0 0">PEMBAYARAN PERPANJANGAN</div>
+          <div class="row between"><span class="t14 muted">Harga sewa baru</span><span class="t15 w6">Rp 1.111</span></div>
+          <div class="row g8"><div class="chip ok" style="padding:6px 14px"><svg class="ic xs"><use href="#i-check"/></svg>Lunas</div><div class="chip neutral" style="padding:6px 14px">Belum lunas</div></div>
+          <div class="t12 hi">Lunas — dibayar penuh Rp 1.111.</div>
+        </div>
+        <div class="stickycta"><div class="btn primary block"><svg class="ic"><use href="#i-repeat"/></svg>Perpanjang</div></div>
+        <div class="homebar"><i></i></div>
+      </div>
+      <div class="cap"><b>3.10 Perpanjang kos</b><br>durasi → tanggal keluar baru<span class="size">Kartu tanggal menyorot</span></div>
+    </div>
+
+    <!-- 3.11 pindah tanggal -->
+    <div class="frame">
+      <div class="phone">
+        <div class="statusbar"><span>4:00</span><span>▮▮▮ ⌾ ▰</span></div>
+        <div class="appbar"><div class="iconbtn plain"><svg class="ic"><use href="#i-back"/></svg></div><h3>Pindah tanggal</h3></div>
+        <div class="content">
+          <div class="TF focus" style="margin-top:4px"><span class="lbl">Tanggal masuk</span><div class="inp">11 Okt 2026 <span class="grow"></span><svg class="ic sm muted"><use href="#i-cal"/></svg></div></div>
+          <div class="TF"><span class="lbl">Tanggal keluar</span><div class="inp">15 Des 2026 <span class="grow"></span><svg class="ic sm muted"><use href="#i-cal"/></svg></div></div>
+          <div class="card row g12" style="border-style:dashed"><svg class="ic" style="color:var(--amber)"><use href="#i-info"/></svg><div class="grow t13 muted">Mengubah tanggal tidak menghitung ulang harga.</div></div>
+        </div>
+        <div class="stickycta"><div class="btn primary block">Simpan tanggal</div></div>
+        <div class="homebar"><i></i></div>
+      </div>
+      <div class="cap"><b>3.11 Pindah tanggal</b><br>ubah masuk &amp; keluar</div>
+    </div>
+  </div>
+
+  <!-- ============ LOKASI ============ -->
+  <h2 class="sec">4. Tab Lokasi</h2>
+  <div class="grid">
+    <!-- 4.1 list -->
+    <div class="frame">
+      <div class="phone">
+        <div class="statusbar"><span>4:00</span><span>▮▮▮ ⌾ ▰</span></div>
+        <div class="appbar"><h3>Lokasi</h3></div>
+        <div class="content g12">
+          <div class="scroll g12">
+            <div class="card stack g12">
+              <div class="row g12"><span class="logo" style="background-image:url(&quot;data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Crect width='80' height='80' rx='22' fill='%230F766E'/%3E%3Ctext x='40' y='56' font-size='44' fill='white' text-anchor='middle' font-family='Roboto' font-weight='700'%3EW%3C/text%3E%3C/svg%3E&quot;)"></span><div class="grow stack" style="gap:4px"><div class="t16 w6">wasd</div><div class="t13 muted trunc">dddd • ssss</div></div></div>
+              <div class="row g8"><div class="chip ok"><span class="dot"></span>1 terisi</div><div class="chip neutral"><span class="dot"></span>5 kamar</div></div>
+              <div class="row g10"><div class="btn tonal"><svg class="ic"><use href="#i-house"/></svg>Buka</div><div class="grow"></div><div class="iconbtn"><svg class="ic sm"><use href="#i-edit"/></svg></div><div class="iconbtn danger"><svg class="ic sm"><use href="#i-del"/></svg></div></div>
+            </div>
+            <div class="card stack g12">
+              <div class="row g12"><span class="logo" style="background:var(--variant);color:var(--muted)"><svg class="ic"><use href="#i-home"/></svg></span><div class="grow stack" style="gap:4px"><div class="t16 w6">Miraya Kos</div><div class="t13 muted trunc">Adi Sucipto • Jl. Adi Sucipto</div></div></div>
+              <div class="row g8"><div class="chip neutral"><span class="dot"></span>0 terisi</div><div class="chip neutral"><span class="dot"></span>5 kamar</div></div>
+              <div class="row g10"><div class="btn tonal"><svg class="ic"><use href="#i-house"/></svg>Buka</div><div class="grow"></div><div class="iconbtn"><svg class="ic sm"><use href="#i-edit"/></svg></div><div class="iconbtn danger"><svg class="ic sm"><use href="#i-del"/></svg></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="fab"><svg class="ic"><use href="#i-plus"/></svg></div>
+        <div class="navbar" data-active="1"></div>
+        <div class="homebar"><i></i></div>
+      </div>
+      <div class="cap"><b>4.1 Daftar lokasi</b><br>tombol <b>Buka</b> → detail 3 tab<span class="size">Logo • terisi • kamar</span></div>
+    </div>
+
+    <!-- 4A detail lokasi - Dashboard -->
+    <div class="frame">
+      <div class="phone">
+        <div class="statusbar"><span>4:00</span><span>▮▮▮ ⌾ ▰</span></div>
+        <div class="appbar"><div class="iconbtn plain"><svg class="ic"><use href="#i-back"/></svg></div><h3>wasd</h3><div class="grow"></div><div class="iconbtn plain"><svg class="ic"><use href="#i-more"/></svg></div></div>
+        <div class="tabs"><div class="on">Dashboard<div class="bar"></div></div><div>Kamar<div class="bar"></div></div><div>Pembayaran<div class="bar"></div></div></div>
+        <div class="content g12">
+          <div class="scroll g12">
+            <div class="card stack g10">
+              <div class="row between"><span class="t12 muted w6">TERISI</span><span class="t12 muted w6">5 kamar</span></div>
+              <div class="row between" style="align-items:flex-end"><span class="t22 w7">1 <span class="t14 muted">/ 5</span></span><span class="chip acc">20%</span></div>
+              <div style="height:8px;border-radius:999px;background:var(--variant);overflow:hidden"><i style="display:block;width:20%;height:100%;background:var(--accent)"></i></div>
+              <div class="row g8" style="flex-wrap:wrap"><div class="chip ok"><span class="dot"></span>1 terisi</div><div class="chip neutral"><span class="dot"></span>3 tersedia</div><div class="chip warn"><span class="dot"></span>1 kotor</div></div>
+            </div>
+            <div class="statgrid">
+              <div class="stat"><div class="top hi"><svg class="ic sm"><use href="#i-up"/></svg>Masuk bulan ini</div><div class="num">Rp 1.111</div></div>
+              <div class="stat"><div class="top" style="color:var(--red)"><svg class="ic sm"><use href="#i-down"/></svg>Keluar bulan ini</div><div class="num">Rp 250.000</div></div>
+            </div>
+            <div class="card stack g10">
+              <div class="row between"><span class="t15 w6">Jatuh tempo terdekat</span><span class="chip warn"><span class="dot"></span>12 hari</span></div>
+              <div class="lrow" style="background:transparent;border:0;padding:0"><span class="avatar xs"></span><div class="grow stack" style="gap:2px"><div class="t14 w6">Budiono</div><div class="t12 muted">Kamar 3 • 23 Okt 2026</div></div><div class="iconbtn plain"><svg class="ic sm"><use href="#i-chev"/></svg></div></div>
+            </div>
+            <div class="card stack g10">
+              <div class="row between"><span class="t15 w6">Perlu tindakan</span></div>
+              <div class="row g8" style="flex-wrap:wrap"><div class="btn tonal" style="height:38px;font-size:13px"><svg class="ic sm"><use href="#i-plus"/></svg>Tambah penghuni</div><div class="btn" style="height:38px;font-size:13px"><svg class="ic sm"><use href="#i-up"/></svg>Catat pembayaran</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="homebar"><i></i></div>
+      </div>
+      <div class="cap"><b>4A Detail lokasi - Dashboard</b><br>ringkasan hunian, keuangan, jatuh tempo<span class="size">Bar progres + kartu stat</span></div>
+    </div>
+
+    <!-- 4B detail lokasi - Kamar -->
+    <div class="frame">
+      <div class="phone">
+        <div class="statusbar"><span>4:00</span><span>▮▮▮ ⌾ ▰</span></div>
+        <div class="appbar"><div class="iconbtn plain"><svg class="ic"><use href="#i-back"/></svg></div><h3>wasd</h3><div class="grow"></div><div class="iconbtn plain"><svg class="ic"><use href="#i-more"/></svg></div></div>
+        <div class="tabs"><div>Dashboard<div class="bar"></div></div><div class="on">Kamar<div class="bar"></div></div><div>Pembayaran<div class="bar"></div></div></div>
+        <div class="content g12">
+          <div class="search"><svg class="ic"><use href="#i-search"/></svg> Cari nomor kamar…</div>
+          <div class="scroll g12">
+            <div class="card stack g10"><div class="row between"><div class="t16 w6">Kamar 1</div><div class="chip ok"><span class="dot"></span>Terisi</div></div><div class="row g10"><span class="avatar xs" style="background:linear-gradient(#cfe8a0,#6ba43a)"></span><div class="t14 grow">Nayla</div><div class="btn tonal" style="height:34px;padding:0 12px;font-size:13px">Detail</div><div class="iconbtn" style="width:34px;height:34px"><svg class="ic sm"><use href="#i-edit"/></svg></div></div></div>
+            <div class="card stack g10"><div class="row between"><div class="t16 w6">Kamar 2</div><div class="chip neutral"><span class="dot"></span>Tersedia</div></div><div class="row between"><span class="t13 muted">Tipe: wasd</span><div class="row g8"><div class="btn tonal" style="height:34px;padding:0 12px;font-size:13px">Detail</div><div class="iconbtn" style="width:34px;height:34px"><svg class="ic sm"><use href="#i-edit"/></svg></div></div></div></div>
+            <div class="card stack g10"><div class="row between"><div class="t16 w6">Kamar 3</div><div class="chip warn"><span class="dot"></span>Kotor</div></div><div class="row between"><span class="t13 muted">Tipe: wasd</span><div class="row g8"><div class="btn tonal" style="height:34px;padding:0 12px;font-size:13px">Detail</div><div class="iconbtn" style="width:34px;height:34px"><svg class="ic sm"><use href="#i-edit"/></svg></div></div></div></div>
+          </div>
+        </div>
+        <div class="homebar"><i></i></div>
+      </div>
+      <div class="cap"><b>4B Detail lokasi - Kamar</b><br>tiap kartu hanya <b>Detail</b> + <b>Edit</b><span class="size">Tanpa tambah/hapus di sini</span></div>
+    </div>
+
+    <!-- 4C detail lokasi - Pembayaran -->
+    <div class="frame">
+      <div class="phone">
+        <div class="statusbar"><span>4:00</span><span>▮▮▮ ⌾ ▰</span></div>
+        <div class="appbar"><div class="iconbtn plain"><svg class="ic"><use href="#i-back"/></svg></div><h3>wasd</h3><div class="grow"></div><div class="iconbtn plain"><svg class="ic"><use href="#i-more"/></svg></div></div>
+        <div class="tabs"><div>Dashboard<div class="bar"></div></div><div>Kamar<div class="bar"></div></div><div class="on">Pembayaran<div class="bar"></div></div></div>
+        <div class="content g12">
+          <div class="seg"><div class="on">Semua</div><div>Masuk</div><div>Keluar</div></div>
+          <div class="scroll g10">
+            <div class="lrow"><span class="avatar sm" style="background:var(--accentContainer);color:var(--accent)"><svg class="ic"><use href="#i-up"/></svg></span><div class="grow stack" style="gap:3px"><div class="t15 w6 hi">Rp 1.111</div><div class="t12 muted trunc">Pemasukan • Sewa • Nayla • 01 Okt</div></div><div class="iconbtn plain"><svg class="ic"><use href="#i-doc"/></svg></div></div>
+            <div class="lrow"><span class="avatar sm" style="background:var(--redBg);color:var(--red)"><svg class="ic"><use href="#i-down"/></svg></span><div class="grow stack" style="gap:3px"><div class="t15 w6" style="color:var(--red)">Rp 250.000</div><div class="t12 muted trunc">Pengeluaran • Listrik/Air • 03 Okt</div></div><div class="iconbtn plain"><svg class="ic"><use href="#i-more"/></svg></div></div>
+          </div>
+        </div>
+        <div class="homebar"><i></i></div>
+      </div>
+      <div class="cap"><b>4C Detail lokasi - Pembayaran</b><br>hanya catatan lokasi ini<span class="size">Masuk / Keluar</span></div>
+    </div>
+
+    <!-- 4D detail lokasi - Pengaturan -->
+    <div class="frame">
+      <div class="phone">
+        <div class="statusbar"><span>4:00</span><span>▮▮▮ ⌾ ▰</span></div>
+        <div class="appbar"><div class="iconbtn plain"><svg class="ic"><use href="#i-back"/></svg></div><h3>Pengaturan</h3></div>
+        <div class="content g12">
+          <div class="hero" style="padding:14px"><span class="logo" style="background-image:url(&quot;data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Crect width='80' height='80' rx='22' fill='%230F766E'/%3E%3Ctext x='40' y='56' font-size='44' fill='white' text-anchor='middle' font-family='Roboto' font-weight='700'%3EW%3C/text%3E%3C/svg%3E&quot;)"></span><div class="grow stack" style="gap:3px"><div class="t16 w6">wasd</div><div class="t12 muted trunc">dddd • ssss</div></div></div>
+          <div class="srow" style="border-bottom:0"><svg class="ic"><use href="#i-edit"/></svg><div class="grow stack" style="gap:2px"><div class="t16">Edit info lokasi</div><div class="t13 muted">Nama, cabang, alamat, logo</div></div><svg class="ic chev"><use href="#i-chev"/></svg></div>
+          <div class="sechead">Kamar</div>
+          <div class="srow"><svg class="ic"><use href="#i-grid"/></svg><div class="grow stack" style="gap:2px"><div class="t16">Tipe kamar</div><div class="t13 muted">Tambah / ubah tipe kamar</div></div><svg class="ic chev"><use href="#i-chev"/></svg></div>
+          <div class="srow"><svg class="ic"><use href="#i-list"/></svg><div class="grow stack" style="gap:2px"><div class="t16">Nomor kamar</div><div class="t13 muted">Tambah / ubah nomor kamar</div></div><svg class="ic chev"><use href="#i-chev"/></svg></div>
+          <div class="sechead">Lainnya</div>
+          <div class="srow" style="border-bottom:0"><svg class="ic" style="color:var(--red)"><use href="#i-del"/></svg><div class="grow stack" style="gap:2px"><div class="t16" style="color:var(--red)">Hapus lokasi</div><div class="t13 muted">Hapus lokasi + seluruh kamar</div></div></div>
+        </div>
+        <div class="homebar"><i></i></div>
+      </div>
+      <div class="cap"><b>4D Detail lokasi - Pengaturan</b><br>atur <b>tipe kamar</b> &amp; <b>nomor kamar</b> di sini<span class="size">Bukan di daftar kamar</span></div>
+    </div>
+
+    <!-- 4.5 harga -->
+    <div class="frame">
+      <div class="phone">
+        <div class="statusbar"><span>4:00</span><span>▮▮▮ ⌾ ▰</span></div>
+        <div class="appbar"><div class="iconbtn plain"><svg class="ic"><use href="#i-back"/></svg></div><h3>Harga — wasd</h3></div>
+        <div class="content g12">
+          <div class="card row g12"><div class="grow stack" style="gap:3px"><div class="t15 w6">Rp 1.111</div><div class="t12 muted">1 orang • 1 bulan</div></div><div class="iconbtn"><svg class="ic sm"><use href="#i-edit"/></svg></div><div class="iconbtn danger"><svg class="ic sm"><use href="#i-del"/></svg></div></div>
+          <div class="card row g12"><div class="grow stack" style="gap:3px"><div class="t15 w6">Rp 500.000</div><div class="t12 muted">1 orang • 1 tahun</div></div><div class="iconbtn"><svg class="ic sm"><use href="#i-edit"/></svg></div><div class="iconbtn danger"><svg class="ic sm"><use href="#i-del"/></svg></div></div>
+        </div>
+        <div class="fab"><svg class="ic"><use href="#i-plus"/></svg></div>
+        <div class="homebar"><i></i></div>
+      </div>
+      <div class="cap"><b>4.5 Daftar harga</b></div>
+    </div>
+
+    <!-- 4.6 form harga -->
+    <div class="frame">
+      <div class="phone">
+        <div class="statusbar"><span>4:00</span><span>▮▮▮ ⌾ ▰</span></div>
+        <div class="appbar"><div class="iconbtn plain"><svg class="ic"><use href="#i-back"/></svg></div><h3>Tambah harga</h3></div>
+        <div class="content">
+          <div class="TF focus"><span class="lbl">Jumlah orang *</span><div class="inp">1</div></div>
+          <div class="TF"><span class="lbl">Durasi *</span><div class="inp">1 <span class="grow"></span><svg class="ic xs muted"><use href="#i-chev"/></svg></div></div>
+          <div class="TF"><span class="lbl">Satuan *</span><div class="inp">Bulan <span class="grow"></span><svg class="ic xs muted"><use href="#i-chev"/></svg></div></div>
+          <div class="TF"><span class="lbl">Harga *</span><div class="inp">Rp 1.111</div></div>
+        </div>
+        <div class="stickycta"><div class="btn primary block">Simpan harga</div></div>
+        <div class="homebar"><i></i></div>
+      </div>
+      <div class="cap"><b>4.6 Form tambah harga</b><span class="size">Prefix “Rp ” konsisten</span></div>
+    </div>
+
+    <!-- 4.7 edit kamar -->
+    <div class="frame">
+      <div class="phone">
+        <div class="statusbar"><span>4:00</span><span>▮▮▮ ⌾ ▰</span></div>
+        <div class="appbar"><div class="iconbtn plain"><svg class="ic"><use href="#i-back"/></svg></div><h3>Edit kamar</h3></div>
+        <div class="content" style="overflow:hidden">
+          <div class="TF focus"><span class="lbl">Nama kamar *</span><div class="inp">Kamar 1</div></div>
+          <div class="TF"><span class="lbl">Tipe kamar *</span><div class="inp">wasd <span class="grow"></span><svg class="ic xs muted"><use href="#i-chev"/></svg></div></div>
+          <div class="sec">STATUS</div>
+          <div class="chips"><div class="chip ok">Tersedia</div><div class="chip" style="background:var(--accentContainer);color:var(--onAccentContainer)">Terisi</div><div class="chip neutral">Kotor</div><div class="chip neutral">Maintenance</div></div>
+          <div class="sec">FOTO KAMAR</div>
+          <div class="photoframe"><img src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='190'%3E%3Crect width='300' height='190' fill='%234a7d2c'/%3E%3C/svg%3E"><div class="ovl"><svg class="ic sm"><use href="#i-more"/></svg></div></div>
+        </div>
+        <div class="stickycta row g10"><div class="btn block" style="color:var(--red)">Hapus</div><div class="btn primary block">Simpan</div></div>
+        <div class="homebar"><i></i></div>
+      </div>
+      <div class="cap"><b>4.7 Edit kamar</b><span class="size">Hapus + Simpan sejajar, seragam</span></div>
+    </div>
+
+    <!-- 4.8 batch -->
+    <div class="frame">
+      <div class="phone">
+        <div class="statusbar"><span>4:00</span><span>▮▮▮ ⌾ ▰</span></div>
+        <div class="appbar"><div class="iconbtn plain"><svg class="ic"><use href="#i-back"/></svg></div><h3>Tambah banyak kamar</h3></div>
+        <div class="content" style="overflow:hidden">
+          <div class="TF"><span class="lbl">Tipe kamar *</span><div class="inp">wasd <span class="grow"></span><svg class="ic xs muted"><use href="#i-chev"/></svg></div></div>
+          <div class="TF"><span class="lbl">Awalan nama</span><div class="inp">Kamar</div></div>
+          <div class="TF"><span class="lbl">Jumlah (1–100) *</span><div class="inp">5</div></div>
+          <div class="card stack g6"><div class="t12 muted">Akan dibuat</div><div class="t13">Kamar 1, Kamar 2, Kamar 3, Kamar 4, Kamar 5</div></div>
+        </div>
+        <div class="stickycta"><div class="btn primary block">Generate kamar</div></div>
+        <div class="homebar"><i></i></div>
+      </div>
+      <div class="cap"><b>4.8 Tambah banyak kamar</b></div>
+    </div>
+
+    <!-- 4.9 dialog tambah lokasi (dengan logo) -->
+    <div class="frame">
+      <div class="phone">
+        <div class="statusbar"><span>4:00</span><span>▮▮▮ ⌾ ▰</span></div>
+        <div class="appbar"><h3>Lokasi</h3></div>
+        <div class="content"><div class="card stack g12"><div class="stack" style="gap:4px"><div class="t16 w6">wasd</div><div class="t13 muted">dddd • ssss</div></div></div></div>
+        <div class="scrim"></div>
+        <div class="dlg wide">
+          <div class="t20 w6" style="margin-bottom:14px">Tambah lokasi</div>
+          <div class="stack center" style="gap:8px;margin-bottom:4px">
+            <div class="logofield has" style="background-image:url(&quot;data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='92' height='92'%3E%3Crect width='92' height='92' fill='%230F766E'/%3E%3Ctext x='46' y='62' font-size='46' fill='white' text-anchor='middle' font-family='Roboto' font-weight='700'%3EM%3C/text%3E%3C/svg%3E&quot;)"><div class="cam"><svg class="ic"><use href="#i-cam"/></svg></div></div>
+            <div class="t11 muted center">Logo lokasi — tampil di kwitansi.<br>Kosongkan untuk pakai ikon rumah.</div>
+          </div>
+          <div class="TF focus"><span class="lbl" style="background:var(--containerHigh)">Nama *</span><div class="inp">Miraya Kos</div></div>
+          <div class="TF"><span class="lbl" style="background:var(--containerHigh)">Cabang</span><div class="inp">Adi Sucipto</div></div>
+          <div class="TF"><span class="lbl" style="background:var(--containerHigh)">Alamat *</span><div class="inp">Jl. Adi Sucipto</div></div>
+          <div class="sec" style="margin:12px 0 0">UTILITAS (OPSIONAL)</div>
+          <div class="row g10"><div class="grow TF" style="margin-top:14px"><span class="lbl" style="background:var(--containerHigh)">Token listrik</span><div class="inp"><span class="ph">—</span></div></div><div class="grow TF" style="margin-top:14px"><span class="lbl" style="background:var(--containerHigh)">Nomor PDAM</span><div class="inp"><span class="ph">—</span></div></div></div>
+          <div class="row g10" style="margin-top:18px;justify-content:flex-end"><div class="btn">Batal</div><div class="btn primary">Simpan</div></div>
+        </div>
+        <div class="homebar"><i></i></div>
+      </div>
+      <div class="cap"><b>4.9 Form tambah lokasi</b><br>logo + nama + cabang + alamat<span class="size">Logo → kwitansi</span></div>
+    </div>
+
+    <!-- 4.10 dialog hapus -->
+    <div class="frame">
+      <div class="phone">
+        <div class="statusbar"><span>4:00</span><span>▮▮▮ ⌾ ▰</span></div>
+        <div class="appbar"><h3>Lokasi</h3></div>
+        <div class="content"><div class="card stack g12"><div class="stack" style="gap:4px"><div class="t16 w6">wasd</div><div class="t13 muted">dddd • ssss</div></div></div></div>
+        <div class="scrim"></div>
+        <div class="dlg">
+          <div class="t20 w6">Hapus lokasi?</div>
+          <div class="t14 muted" style="margin-top:10px">Lokasi “wasd” beserta kamar di dalamnya akan dihapus. Tindakan ini tidak dapat dibatalkan.</div>
+          <div class="row g10" style="margin-top:22px;justify-content:flex-end"><div class="btn">Batal</div><div class="btn primary" style="background:var(--red);color:#fff">Hapus</div></div>
+        </div>
+        <div class="homebar"><i></i></div>
+      </div>
+      <div class="cap"><b>4.10 Dialog konfirmasi hapus</b></div>
+    </div>
+  </div>
+
+  <!-- ============ LOKASI — TIPE (BARU) ============ -->
+  <h2 class="sec new">4b. Tipe kamar, nomor kamar &amp; harga <small>baru</small></h2>
+  <div class="grid">
+    <!-- 4.11 kelola tipe kamar -->
+    <div class="frame">
+      <div class="phone">
+        <div class="statusbar"><span>4:00</span><span>▮▮▮ ⌾ ▰</span></div>
+        <div class="appbar"><div class="iconbtn plain"><svg class="ic"><use href="#i-back"/></svg></div><h3>Kelola tipe kamar</h3></div>
+        <div class="content g12">
+          <div class="stack" style="gap:2px"><div class="t16 w6">wasd</div><div class="t13 muted">Tipe kamar di lokasi ini</div></div>
+          <div class="btn tonal block" style="height:48px"><svg class="ic"><use href="#i-plus"/></svg>Tambah tipe kamar</div>
+          <div class="scroll g10">
+            <div class="card row g12" style="padding:12px"><div class="avatar sm" style="background:var(--accentContainer);color:var(--accent)"><svg class="ic"><use href="#i-grid"/></svg></div><div class="grow stack" style="gap:2px"><div class="t15 w6">wasd</div><div class="t12 muted">Kelola harga dan kamar</div></div><div class="btn" style="height:34px;padding:0 12px;font-size:13px">Edit</div><div class="iconbtn danger" style="width:34px;height:34px"><svg class="ic sm"><use href="#i-del"/></svg></div></div>
+            <div class="card row g12" style="padding:12px"><div class="avatar sm" style="background:var(--variant);color:var(--muted)"><svg class="ic"><use href="#i-grid"/></svg></div><div class="grow stack" style="gap:2px"><div class="t15 w6">Standar</div><div class="t12 muted">Kelola harga dan kamar</div></div><div class="btn" style="height:34px;padding:0 12px;font-size:13px">Edit</div><div class="iconbtn danger" style="width:34px;height:34px"><svg class="ic sm"><use href="#i-del"/></svg></div></div>
+          </div>
+        </div>
+        <div class="homebar"><i></i></div>
+      </div>
+      <div class="cap"><b>4.11 Kelola tipe kamar</b><br>daftar + Tambah<span class="size">Tombol bidang penuh</span></div>
+    </div>
+
+    <!-- 4.12 dialog tambah tipe kamar -->
+    <div class="frame">
+      <div class="phone">
+        <div class="statusbar"><span>4:00</span><span>▮▮▮ ⌾ ▰</span></div>
+        <div class="appbar"><div class="iconbtn plain"><svg class="ic"><use href="#i-back"/></svg></div><h3>Kelola tipe kamar</h3></div>
+        <div class="content g12"><div class="card row g12"><div class="grow"><div class="t15 w6">wasd</div><div class="t12 muted">Kelola harga dan kamar</div></div></div></div>
+        <div class="scrim"></div>
+        <div class="dlg">
+          <div class="t20 w6" style="margin-bottom:16px">Tambah tipe kamar</div>
+          <div class="TF focus"><span class="lbl" style="background:var(--containerHigh)">Nama tipe kamar</span><div class="inp">Tipe baru</div></div>
+          <div class="row g10" style="margin-top:22px;justify-content:flex-end"><div class="btn">Batal</div><div class="btn primary">Simpan</div></div>
+        </div>
+        <div class="homebar"><i></i></div>
+      </div>
+      <div class="cap"><b>4.12 Dialog tambah tipe kamar</b><span class="size">Radius 24 dp</span></div>
+    </div>
+
+    <!-- 4.13 dialog tambah harga -->
+    <div class="frame">
+      <div class="phone">
+        <div class="statusbar"><span>4:00</span><span>▮▮▮ ⌾ ▰</span></div>
+        <div class="appbar"><div class="iconbtn plain"><svg class="ic"><use href="#i-back"/></svg></div><h3>wasd</h3></div>
+        <div class="content g12"><div class="card row g12"><div class="grow"><div class="t15 w6">Rp 1.111</div><div class="t12 muted">1 orang • 1 bulan</div></div></div></div>
+        <div class="scrim"></div>
+        <div class="dlg">
+          <div class="t20 w6" style="margin-bottom:14px">Tambah harga</div>
+          <div class="row g10" style="margin-bottom:4px"><div class="grow TF focus" style="margin-top:16px"><span class="lbl" style="background:var(--containerHigh)">Orang</span><div class="inp">1</div></div><div class="grow TF" style="margin-top:16px"><span class="lbl" style="background:var(--containerHigh)">Durasi</span><div class="inp">1</div></div></div>
+          <div class="TF"><span class="lbl" style="background:var(--containerHigh)">Satuan</span><div class="inp">Bulan <span class="grow"></span><svg class="ic xs muted"><use href="#i-chev"/></svg></div></div>
+          <div class="TF"><span class="lbl" style="background:var(--containerHigh)">Harga (Rupiah)</span><div class="inp">Rp 1.111</div></div>
+          <div class="row g10" style="margin-top:20px;justify-content:flex-end"><div class="btn">Batal</div><div class="btn primary">Simpan</div></div>
+        </div>
+        <div class="homebar"><i></i></div>
+      </div>
+      <div class="cap"><b>4.13 Dialog tambah harga</b><span class="size">Orang + durasi + satuan</span></div>
+    </div>
+
+    <!-- 4.14 nomor kamar -->
+    <div class="frame">
+      <div class="phone">
+        <div class="statusbar"><span>4:00</span><span>▮▮▮ ⌾ ▰</span></div>
+        <div class="appbar"><div class="iconbtn plain"><svg class="ic"><use href="#i-back"/></svg></div><h3>Nomor kamar</h3></div>
+        <div class="content g12">
+          <div class="stack" style="gap:2px"><div class="t15 w6">wasd</div><div class="t12 muted">Tambah &amp; ubah nomor/urutan kamar</div></div>
+          <div class="scroll g10">
+            <div class="card row g12" style="padding:12px"><span class="avatar sm" style="background:var(--accentContainer);color:var(--accent)"><svg class="ic"><use href="#i-key"/></svg></span><div class="grow stack" style="gap:2px"><div class="t15 w6">Kamar 1</div><div class="t12 muted">Tipe wasd</div><div class="t11 muted">Token 1234 5678 9012 • PDAM tidak tersedia</div></div><div class="iconbtn" style="width:36px;height:36px"><svg class="ic sm"><use href="#i-edit"/></svg></div></div>
+            <div class="card row g12" style="padding:12px"><span class="avatar sm" style="background:var(--variant);color:var(--muted)"><svg class="ic"><use href="#i-key"/></svg></span><div class="grow stack" style="gap:2px"><div class="t15 w6">Kamar 2</div><div class="t12 muted">Tipe wasd</div><div class="t11 muted">Token &amp; PDAM belum diisi</div></div><div class="iconbtn" style="width:36px;height:36px"><svg class="ic sm"><use href="#i-edit"/></svg></div></div>
+            <div class="card row g12" style="padding:12px"><span class="avatar sm" style="background:var(--variant);color:var(--muted)"><svg class="ic"><use href="#i-key"/></svg></span><div class="grow stack" style="gap:2px"><div class="t15 w6">Kamar 3</div><div class="t12 muted">Tipe wasd</div><div class="t11 muted">Token 5566 7788 • PDAM belum diisi</div></div><div class="iconbtn" style="width:36px;height:36px"><svg class="ic sm"><use href="#i-edit"/></svg></div></div>
+          </div>
+        </div>
+        <div class="stickycta"><div class="btn primary block"><svg class="ic"><use href="#i-plus"/></svg>Tambah nomor kamar</div></div>
+        <div class="homebar"><i></i></div>
+      </div>
+      <div class="cap"><b>4.14 Nomor kamar</b><br>nomor + token listrik/PDAM tiap kamar<span class="size">Utilitas opsional</span></div>
+    </div>
+    <div class="frame">
+      <div class="phone">
+        <div class="statusbar"><span>4:00</span><span>▮▮▮ ⌾ ▰</span></div>
+        <div class="appbar"><div class="iconbtn plain"><svg class="ic"><use href="#i-back"/></svg></div><h3>Detail kamar</h3></div>
+        <div class="content">
+          <div class="hero"><span class="logo"><svg class="ic"><use href="#i-key"/></svg></span><div class="stack g4"><div class="t16 w6">Kamar 1</div><div class="t13 muted">wasd • Tipe wasd</div><div class="chip ok">Terisi</div></div></div>
+          <div class="card">
+            <div class="kv"><span class="k">Penghuni</span><span class="v">Nayla</span></div>
+            <div class="kv"><span class="k">Nomor token listrik</span><span class="v">1234 5678 9012</span></div>
+            <div class="kv"><span class="k">Nomor PDAM</span><span class="v muted">Tidak tersedia</span></div>
+          </div>
+          <div class="t12 muted">Nomor utilitas opsional. Data contoh, bukan nomor pelanggan asli.</div>
+        </div>
+        <div class="stickycta"><div class="btn primary block">Edit kamar</div></div>
+        <div class="homebar"><i></i></div>
+      </div>
+      <div class="cap"><b>Detail nomor kamar</b><br>nomor token listrik + PDAM, atau Tidak tersedia</div>
+    </div>
+
+    <!-- 4.15 edit nomor kamar -->
+    <div class="frame">
+      <div class="phone">
+        <div class="statusbar"><span>4:00</span><span>▮▮▮ ⌾ ▰</span></div>
+        <div class="appbar"><div class="iconbtn plain"><svg class="ic"><use href="#i-back"/></svg></div><h3>Edit nomor kamar</h3></div>
+        <div class="content" style="overflow:hidden">
+          <div class="TF focus"><span class="lbl">Nomor kamar *</span><div class="inp">Kamar 1</div></div>
+          <div class="TF"><span class="lbl">Tipe kamar *</span><div class="inp">wasd <span class="grow"></span><svg class="ic xs muted"><use href="#i-chev"/></svg></div></div>
+          <div class="sec">UTILITAS (OPSIONAL)</div>
+          <div class="TF"><span class="lbl">Nomor token listrik</span><div class="inp">1234 5678 9012</div></div>
+          <div class="TF"><span class="lbl">Nomor PDAM</span><div class="inp"><span class="ph">—</span></div></div>
+          <div class="t11 muted">Kosongkan jika kamar ini tidak punya token/PDAM.</div>
+        </div>
+        <div class="stickycta"><div class="btn primary block"><svg class="ic"><use href="#i-check"/></svg>Simpan</div></div>
+        <div class="homebar"><i></i></div>
+      </div>
+      <div class="cap"><b>4.15 Edit nomor kamar</b><br>nomor + tipe + token listrik/PDAM<span class="size">Utilitas opsional</span></div>
+    </div>
+  </div>
+
+  <!-- ============ LOGO LOKASI (BARU) ============ -->
+  <h2 class="sec new">4c. Logo lokasi <small>baru — tampil di kwitansi</small></h2>
+  <div class="grid">
+    <!-- 4.16 edit lokasi + logo -->
+    <div class="frame">
+      <div class="phone">
+        <div class="statusbar"><span>4:00</span><span>▮▮▮ ⌾ ▰</span></div>
+        <div class="appbar"><div class="iconbtn plain"><svg class="ic"><use href="#i-back"/></svg></div><h3>Edit lokasi</h3></div>
+        <div class="content" style="overflow:hidden">
+          <div class="stack center" style="gap:10px;padding-top:6px">
+            <div class="logofield has" style="background-image:url(&quot;data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='92' height='92'%3E%3Crect width='92' height='92' fill='%230F766E'/%3E%3Ctext x='46' y='62' font-size='46' fill='white' text-anchor='middle' font-family='Roboto' font-weight='700'%3EW%3C/text%3E%3C/svg%3E&quot;)"><div class="cam"><svg class="ic"><use href="#i-cam"/></svg></div></div>
+            <div class="row g10">
+              <div class="btn" style="height:38px"><svg class="ic"><use href="#i-image"/></svg>Ganti logo</div>
+              <div class="btn" style="height:38px;color:var(--red)"><svg class="ic"><use href="#i-close"/></svg>Hapus</div>
+            </div>
+            <div class="t11 muted center">Kosong = otomatis ikon rumah</div>
+          </div>
+          <div class="sec">DATA LOKASI</div>
+          <div class="TF"><span class="lbl">Nama *</span><div class="inp">wasd</div></div>
+          <div class="TF"><span class="lbl">Cabang</span><div class="inp">dddd</div></div>
+          <div class="TF"><span class="lbl">Alamat *</span><div class="inp">ssss</div></div>
+          <div class="sec">UTILITAS (OPSIONAL)</div>
+          <div class="TF"><span class="lbl">Nomor token listrik (opsional)</span><div class="inp">5566 7788 9900</div></div>
+          <div class="TF"><span class="lbl">Nomor PDAM (opsional)</span><div class="inp">99887766</div></div>
+          <div class="t11 muted">Kosongkan jika tidak ada.</div>
+        </div>
+        <div class="stickycta"><div class="btn primary block"><svg class="ic"><use href="#i-check"/></svg>Simpan perubahan</div></div>
+        <div class="homebar"><i></i></div>
+      </div>
+      <div class="cap"><b>4.16 Edit lokasi + logo</b><br>pasang / ganti / hapus logo<span class="size">Logo kotak 92 dp</span></div>
+    </div>
+
+    <!-- 4.17 kwitansi pakai logo -->
+    <div class="frame">
+      <div class="phone">
+        <div class="statusbar"><span>4:00</span><span>▮▮▮ ⌾ ▰</span></div>
+        <div class="appbar"><div class="iconbtn plain"><svg class="ic"><use href="#i-back"/></svg></div><h3>Kwitansi</h3><div class="grow"></div><div class="iconbtn plain"><svg class="ic"><use href="#i-share"/></svg></div></div>
+        <div class="content">
+          <div class="receipt">
+            <div class="rc-brand" style="border-radius:16px;background-size:cover;background-position:center;background-image:url(&quot;data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='92' height='92'%3E%3Crect width='92' height='92' fill='%230F766E'/%3E%3Ctext x='46' y='62' font-size='46' fill='white' text-anchor='middle' font-family='Roboto' font-weight='700'%3EW%3C/text%3E%3C/svg%3E&quot;)"></div>
+            <div class="stack center" style="gap:2px;margin-top:10px"><div class="t16 w6">wasd</div><div class="t12 muted">dddd • ssss</div></div>
+            <div class="dash"></div>
+            <div class="kv" style="padding-top:0"><span class="k">Penghuni</span><span class="v">Nayla</span></div>
+            <div class="kv"><span class="k">Kamar</span><span class="v">Kamar 1</span></div>
+            <div class="kv"><span class="k">Periode</span><span class="v">01 Okt 2026</span></div>
+            <div class="dash"></div>
+            <div class="row between"><span class="t14 muted">TOTAL DIBAYAR</span><span class="t20 w7 hi">Rp 1.111</span></div>
+            <div class="row between" style="margin-top:12px"><span class="stamp">LUNAS</span></div>
+          </div>
+        </div>
+        <div class="stickycta row g10"><div class="btn block"><svg class="ic"><use href="#i-share"/></svg>Bagikan</div><div class="btn primary block"><svg class="ic"><use href="#i-print"/></svg>PDF</div></div>
+        <div class="homebar"><i></i></div>
+      </div>
+      <div class="cap"><b>4.17 Kwitansi memakai logo lokasi</b><br>logo tampil di atas nama kos<span class="size">Kotak 52 dp</span></div>
+    </div>
+
+    <!-- 4.18 kwitansi tanpa logo -->
+    <div class="frame">
+      <div class="phone">
+        <div class="statusbar"><span>4:00</span><span>▮▮▮ ⌾ ▰</span></div>
+        <div class="appbar"><div class="iconbtn plain"><svg class="ic"><use href="#i-back"/></svg></div><h3>Kwitansi</h3><div class="grow"></div><div class="iconbtn plain"><svg class="ic"><use href="#i-share"/></svg></div></div>
+        <div class="content">
+          <div class="receipt">
+            <div class="rc-brand"><svg class="ic lg" style="width:28px;height:28px"><use href="#i-home"/></svg></div>
+            <div class="stack center" style="gap:2px;margin-top:10px"><div class="t16 w6">Miraya Kos</div><div class="t12 muted">Adi Sucipto • Jl. Adi Sucipto</div></div>
+            <div class="dash"></div>
+            <div class="kv" style="padding-top:0"><span class="k">Penghuni</span><span class="v">Budiono</span></div>
+            <div class="kv"><span class="k">Kamar</span><span class="v">Kamar 3</span></div>
+            <div class="kv"><span class="k">Periode</span><span class="v">01 Okt 2026</span></div>
+            <div class="dash"></div>
+            <div class="row between"><span class="t14 muted">TOTAL DIBAYAR</span><span class="t20 w7 hi">Rp 500.000</span></div>
+            <div class="row between" style="margin-top:12px"><span class="stamp">LUNAS</span></div>
+          </div>
+        </div>
+        <div class="stickycta row g10"><div class="btn block"><svg class="ic"><use href="#i-share"/></svg>Bagikan</div><div class="btn primary block"><svg class="ic"><use href="#i-print"/></svg>PDF</div></div>
+        <div class="homebar"><i></i></div>
+      </div>
+      <div class="cap"><b>4.18 Kwitansi tanpa logo</b><br>otomatis pakai ikon rumah<span class="size">Cadangan bawaan</span></div>
+    </div>
+  </div>
+
+  <!-- ============ PEMBAYARAN ============ -->
+  <h2 class="sec">5. Tab Pembayaran</h2>
+  <div class="grid">
+    <div class="frame">
+      <div class="phone">
+        <div class="statusbar"><span>4:00</span><span>▮▮▮ ⌾ ▰</span></div>
+        <div class="appbar"><h3>Pembayaran</h3></div>
+        <div class="content g14">
+          <div class="seg"><div class="on">Semua</div><div>Pemasukan</div><div>Pengeluaran</div></div>
+          <div class="statgrid">
+            <div class="stat"><div class="top hi"><svg class="ic sm"><use href="#i-up"/></svg>Pemasukan</div><div class="num">Rp 1.111</div></div>
+            <div class="stat"><div class="top" style="color:var(--red)"><svg class="ic sm"><use href="#i-down"/></svg>Pengeluaran</div><div class="num">Rp 250.000</div></div>
+          </div>
+          <div class="scroll g10">
+            <div class="lrow"><span class="avatar sm" style="background:var(--accentContainer);color:var(--accent)"><svg class="ic"><use href="#i-up"/></svg></span><div class="grow stack" style="gap:3px"><div class="t16 w6 hi">Rp 1.111</div><div class="t13 muted trunc">Pemasukan • Sewa • Lunas • 01 Okt 2026</div></div><div class="iconbtn plain"><svg class="ic"><use href="#i-doc"/></svg></div></div>
+            <div class="lrow"><span class="avatar sm" style="background:var(--redBg);color:var(--red)"><svg class="ic"><use href="#i-down"/></svg></span><div class="grow stack" style="gap:3px"><div class="t16 w6" style="color:var(--red)">Rp 250.000</div><div class="t13 muted trunc">Pengeluaran • Listrik/Air • Tunai • 03 Okt 2026</div></div><div class="iconbtn plain"><svg class="ic"><use href="#i-more"/></svg></div></div>
+          </div>
+        </div>
+        <div class="fab"><svg class="ic"><use href="#i-plus"/></svg></div>
+        <div class="navbar" data-active="2"></div>
+        <div class="homebar"><i></i></div>
+      </div>
+      <div class="cap"><b>5.1 Pembayaran — Semua</b><span class="size">Segmented pill • ringkasan kartu</span></div>
+    </div>
+
+    <div class="frame">
+      <div class="phone">
+        <div class="statusbar"><span>4:00</span><span>▮▮▮ ⌾ ▰</span></div>
+        <div class="appbar"><h3>Pembayaran</h3></div>
+        <div class="content g14">
+          <div class="seg"><div>Semua</div><div class="on">Pemasukan</div><div>Pengeluaran</div></div>
+          <div class="statgrid"><div class="stat" style="grid-column:span 2"><div class="top hi"><svg class="ic sm"><use href="#i-up"/></svg>Pemasukan</div><div class="num">Rp 1.111</div></div></div>
+          <div class="scroll g10">
+            <div class="lrow"><span class="avatar sm" style="background:var(--accentContainer);color:var(--accent)"><svg class="ic"><use href="#i-up"/></svg></span><div class="grow stack" style="gap:3px"><div class="t16 w6 hi">Rp 1.111</div><div class="t13 muted trunc">Pemasukan • Sewa • Lunas • 01 Okt 2026</div></div><div class="iconbtn plain"><svg class="ic"><use href="#i-doc"/></svg></div></div>
+          </div>
+        </div>
+        <div class="fab"><svg class="ic"><use href="#i-plus"/></svg></div>
+        <div class="navbar" data-active="2"></div>
+        <div class="homebar"><i></i></div>
+      </div>
+      <div class="cap"><b>5.2 Pembayaran — Pemasukan</b></div>
+    </div>
+
+    <div class="frame">
+      <div class="phone">
+        <div class="statusbar"><span>4:00</span><span>▮▮▮ ⌾ ▰</span></div>
+        <div class="appbar"><h3>Pembayaran</h3></div>
+        <div class="content g14">
+          <div class="seg"><div>Semua</div><div>Pemasukan</div><div class="on">Pengeluaran</div></div>
+          <div class="statgrid"><div class="stat" style="grid-column:span 2"><div class="top" style="color:var(--red)"><svg class="ic sm"><use href="#i-down"/></svg>Pengeluaran</div><div class="num">Rp 250.000</div></div></div>
+          <div class="scroll g10">
+            <div class="lrow"><span class="avatar sm" style="background:var(--redBg);color:var(--red)"><svg class="ic"><use href="#i-down"/></svg></span><div class="grow stack" style="gap:3px"><div class="t16 w6" style="color:var(--red)">Rp 250.000</div><div class="t13 muted trunc">Pengeluaran • Listrik/Air • Tunai • 03 Okt 2026</div></div><div class="iconbtn plain"><svg class="ic"><use href="#i-more"/></svg></div></div>
+          </div>
+        </div>
+        <div class="fab"><svg class="ic"><use href="#i-plus"/></svg></div>
+        <div class="navbar" data-active="2"></div>
+        <div class="homebar"><i></i></div>
+      </div>
+      <div class="cap"><b>5.3 Pembayaran — Pengeluaran</b></div>
+    </div>
+  </div>
+
+  <!-- ============ PEMBAYARAN — FORM & KWITANSI (BARU) ============ -->
+  <h2 class="sec new">5b. Catat pemasukan/pengeluaran &amp; kwitansi <small>baru</small></h2>
+  <div class="grid">
+    <!-- 5.4 catat pemasukan -->
+    <div class="frame">
+      <div class="phone">
+        <div class="statusbar"><span>4:00</span><span>▮▮▮ ⌾ ▰</span></div>
+        <div class="appbar"><h3>Pembayaran</h3></div>
+        <div class="content"><div class="seg"><div>Semua</div><div class="on">Pemasukan</div><div>Pengeluaran</div></div></div>
+        <div class="scrim"></div>
+        <div class="dlg wide">
+          <div class="t20 w6" style="margin-bottom:12px">Catat pemasukan</div>
+          <div class="TF focus"><span class="lbl" style="background:var(--containerHigh)">Penghuni *</span><div class="inp">Nayla <span class="grow"></span><svg class="ic xs muted"><use href="#i-chev"/></svg></div></div>
+          <div class="TF"><span class="lbl" style="background:var(--containerHigh)">Jumlah (Rupiah) *</span><div class="inp">Rp 1.111</div></div>
+          <div class="row g10"><div class="grow TF" style="margin-top:16px"><span class="lbl" style="background:var(--containerHigh)">Kategori</span><div class="inp">Sewa <span class="grow"></span><svg class="ic xs muted"><use href="#i-chev"/></svg></div></div><div class="grow TF" style="margin-top:16px"><span class="lbl" style="background:var(--containerHigh)">Metode</span><div class="inp">Tunai <span class="grow"></span><svg class="ic xs muted"><use href="#i-chev"/></svg></div></div></div>
+          <div class="row g8" style="margin-top:16px"><div class="chip acc" style="padding:6px 14px"><svg class="ic xs"><use href="#i-check"/></svg>Lunas</div><div class="chip neutral" style="padding:6px 14px">Sebagian</div><div class="chip neutral" style="padding:6px 14px">Belum</div></div>
+          <div class="row g10" style="margin-top:20px;justify-content:flex-end"><div class="btn">Batal</div><div class="btn primary">Simpan</div></div>
+        </div>
+        <div class="homebar"><i></i></div>
+      </div>
+      <div class="cap"><b>5.4 Dialog catat pemasukan</b><br>penghuni, jumlah, status<span class="size">Chip status</span></div>
+    </div>
+
+    <!-- 5.5 catat pengeluaran -->
+    <div class="frame">
+      <div class="phone">
+        <div class="statusbar"><span>4:00</span><span>▮▮▮ ⌾ ▰</span></div>
+        <div class="appbar"><h3>Pembayaran</h3></div>
+        <div class="content"><div class="seg"><div>Semua</div><div>Pemasukan</div><div class="on">Pengeluaran</div></div></div>
+        <div class="scrim"></div>
+        <div class="dlg wide">
+          <div class="t20 w6" style="margin-bottom:12px">Catat pengeluaran</div>
+          <div class="TF focus"><span class="lbl" style="background:var(--containerHigh)">Jenis pengeluaran *</span><div class="inp">Listrik/Air <span class="grow"></span><svg class="ic xs muted"><use href="#i-chev"/></svg></div></div>
+          <div class="row g10"><div class="grow TF" style="margin-top:16px"><span class="lbl" style="background:var(--containerHigh)">Kategori</span><div class="inp">Listrik/Air <span class="grow"></span><svg class="ic xs muted"><use href="#i-chev"/></svg></div></div><div class="grow TF" style="margin-top:16px"><span class="lbl" style="background:var(--containerHigh)">Metode</span><div class="inp">Tunai <span class="grow"></span><svg class="ic xs muted"><use href="#i-chev"/></svg></div></div></div>
+          <div class="row g10"><div class="grow TF" style="margin-top:16px"><span class="lbl" style="background:var(--containerHigh)">Jumlah (Rp) *</span><div class="inp">Rp 250.000</div></div><div class="grow TF" style="margin-top:16px"><span class="lbl" style="background:var(--containerHigh)">Lokasi</span><div class="inp">wasd <span class="grow"></span><svg class="ic xs muted"><use href="#i-chev"/></svg></div></div></div>
+          <div class="TF"><span class="lbl" style="background:var(--containerHigh)">Catatan (opsional)</span><div class="inp"><span class="ph">mis. token listrik Oktober</span></div></div>
+          <div class="row g10" style="margin-top:20px;justify-content:flex-end"><div class="btn">Batal</div><div class="btn primary">Simpan</div></div>
+        </div>
+        <div class="homebar"><i></i></div>
+      </div>
+      <div class="cap"><b>5.5 Dialog catat pengeluaran</b><br>jenis, kategori, jumlah<span class="size">2 kolom rapi</span></div>
+    </div>
+
+    <!-- 5.6 kwitansi -->
+    <div class="frame">
+      <div class="phone">
+        <div class="statusbar"><span>4:00</span><span>▮▮▮ ⌾ ▰</span></div>
+        <div class="appbar"><div class="iconbtn plain"><svg class="ic"><use href="#i-back"/></svg></div><h3>Kwitansi</h3><div class="grow"></div><div class="iconbtn plain"><svg class="ic"><use href="#i-share"/></svg></div></div>
+        <div class="content">
+          <div class="receipt">
+            <div class="rc-brand"><svg class="ic lg" style="width:28px;height:28px"><use href="#i-home"/></svg></div>
+            <div class="stack center" style="gap:2px;margin-top:10px"><div class="t16 w6">wasd</div><div class="t12 muted">dddd • ssss</div></div>
+            <div class="dash"></div>
+            <div class="kv" style="padding-top:0"><span class="k">No. kwitansi</span><span class="v">KW-2026-0001</span></div>
+            <div class="kv"><span class="k">Penghuni</span><span class="v">Nayla</span></div>
+            <div class="kv"><span class="k">Kamar</span><span class="v">Kamar 1</span></div>
+            <div class="kv"><span class="k">Kategori</span><span class="v">Sewa</span></div>
+            <div class="kv"><span class="k">Periode</span><span class="v">01 Okt 2026</span></div>
+            <div class="kv"><span class="k">Metode</span><span class="v">Tunai</span></div>
+            <div class="kv"><span class="k">Tanggal bayar</span><span class="v">01 Okt 2026</span></div>
+            <div class="dash"></div>
+            <div class="row between"><span class="t14 muted">TOTAL DIBAYAR</span><span class="t20 w7 hi">Rp 1.111</span></div>
+            <div class="row between" style="margin-top:12px"><span class="stamp">LUNAS</span><span class="t11 muted">Dibuat 01 Okt 2026</span></div>
+            <div class="dash"></div>
+            <div class="t11 muted center">Terima kasih telah membayar tepat waktu.</div>
+          </div>
+        </div>
+        <div class="stickycta row g10"><div class="btn block"><svg class="ic"><use href="#i-share"/></svg>Bagikan</div><div class="btn primary block"><svg class="ic"><use href="#i-print"/></svg>PDF</div></div>
+        <div class="homebar"><i></i></div>
+      </div>
+      <div class="cap"><b>5.6 Kwitansi</b> <span class="size">format struk</span><br>garis putus + cap “LUNAS”<span class="size">Bagikan / Simpan PDF</span></div>
+    </div>
+  </div>
+
+  <!-- ============ PENGATURAN ============ -->
+  <h2 class="sec">6. Tab Pengaturan</h2>
+  <div class="grid">
+    <div class="frame">
+      <div class="phone">
+        <div class="statusbar"><span>4:00</span><span>▮▮▮ ⌾ ▰</span></div>
+        <div class="appbar"><h3>Pengaturan</h3></div>
+        <div class="content g0" style="gap:0">
+          <div class="card row g14" style="margin-top:6px"><span class="avatar lg" style="background:linear-gradient(#394148,#5a636d);color:#c9ced6"><svg class="ic lg"><use href="#i-people"/></svg></span><div class="grow stack" style="gap:3px"><div class="t16 w6 trunc">Rizqi Ismanda Nugraha</div><div class="t13 muted trunc">kiki.manda16@gmail.com</div></div></div>
+          <div class="srow" style="border-bottom:0"><svg class="ic"><use href="#i-grid"/></svg><div class="grow stack" style="gap:2px"><div class="t16">Ringkasan</div><div class="t13 muted">2 lokasi • 10 kamar • 1 penghuni</div></div><svg class="ic chev"><use href="#i-chev"/></svg></div>
+          <div class="sechead">Keuangan</div>
+          <div class="srow"><svg class="ic"><use href="#i-tag"/></svg><div class="grow stack" style="gap:2px"><div class="t16">Kategori</div><div class="t13 muted">Atur kategori pemasukan &amp; pengeluaran</div></div><svg class="ic chev"><use href="#i-chev"/></svg></div>
+          <div class="sechead">Riwayat</div>
+          <div class="srow"><svg class="ic"><use href="#i-hist"/></svg><div class="grow stack" style="gap:2px"><div class="t16">Penghuni keluar</div><div class="t13 muted">Daftar penghuni yang sudah keluar, per bulan</div></div><svg class="ic chev"><use href="#i-chev"/></svg></div>
+        </div>
+        <div class="navbar" data-active="3"></div>
+        <div class="homebar"><i></i></div>
+      </div>
+      <div class="cap"><b>6.1 Pengaturan</b><span class="size">Kartu profil + seksi</span></div>
+    </div>
+
+    <div class="frame">
+      <div class="phone">
+        <div class="statusbar"><span>4:00</span><span>▮▮▮ ⌾ ▰</span></div>
+        <div class="appbar"><div class="iconbtn plain"><svg class="ic"><use href="#i-back"/></svg></div><h3>Kategori</h3></div>
+        <div class="content g12">
+          <div class="seg"><div class="on">Pemasukan</div><div>Pengeluaran</div></div>
+          <div class="scroll g10">
+            <div class="card row g12"><div class="grow t15 w6">Sewa</div><div class="iconbtn"><svg class="ic sm"><use href="#i-edit"/></svg></div><div class="iconbtn danger"><svg class="ic sm"><use href="#i-del"/></svg></div></div>
+            <div class="card row g12"><div class="grow t15 w6">Deposit</div><div class="iconbtn"><svg class="ic sm"><use href="#i-edit"/></svg></div><div class="iconbtn danger"><svg class="ic sm"><use href="#i-del"/></svg></div></div>
+            <div class="card row g12"><div class="grow t15 w6">Listrik/Air</div><div class="iconbtn"><svg class="ic sm"><use href="#i-edit"/></svg></div><div class="iconbtn danger"><svg class="ic sm"><use href="#i-del"/></svg></div></div>
+          </div>
+        </div>
+        <div class="fab sm"><svg class="ic"><use href="#i-plus"/></svg></div>
+        <div class="homebar"><i></i></div>
+      </div>
+      <div class="cap"><b>6.2 Kategori</b><span class="size">Pemasukan / Pengeluaran</span></div>
+    </div>
+
+    <div class="frame">
+      <div class="phone">
+        <div class="statusbar"><span>4:00</span><span>▮▮▮ ⌾ ▰</span></div>
+        <div class="appbar"><div class="iconbtn plain"><svg class="ic"><use href="#i-back"/></svg></div><h3>Penghuni keluar</h3></div>
+        <div class="content g12">
+          <div class="card month"><svg class="ic" style="color:var(--muted)"><use href="#i-chevL"/></svg><b>Oktober 2026</b><svg class="ic" style="color:var(--muted)"><use href="#i-chev"/></svg></div>
+          <div class="scroll g10">
+            <div class="lrow"><span class="avatar sm" style="background:var(--variant)"></span><div class="grow stack" style="gap:3px"><div class="t15 w6">Budi</div><div class="t12 muted trunc">Kamar 2 • 11 Okt 2026 • Rp 500.000</div></div><div class="chip neutral">Keluar</div></div>
+            <div class="lrow"><span class="avatar sm" style="background:var(--variant)"></span><div class="grow stack" style="gap:3px"><div class="t15 w6">Ani</div><div class="t12 muted trunc">Kamar 4 • 05 Okt 2026 • Rp 600.000</div></div><div class="chip neutral">Keluar</div></div>
+          </div>
+        </div>
+        <div class="homebar"><i></i></div>
+      </div>
+      <div class="cap"><b>6.3 Riwayat penghuni keluar</b><span class="size">Navigasi bulan ‹ ›</span></div>
+    </div>
+
+    <div class="frame">
+      <div class="phone">
+        <div class="statusbar"><span>4:00</span><span>▮▮▮ ⌾ ▰</span></div>
+        <div class="appbar"><div class="iconbtn plain"><svg class="ic"><use href="#i-back"/></svg></div><h3>Tema</h3></div>
+        <div class="content g14">
+          <div class="sec" style="margin:2px 0 0">MODE</div>
+          <div class="modes"><div class="mode">Terang</div><div class="mode on">Gelap</div><div class="mode">Hitam</div></div>
+          <div class="sec">AKSEN WARNA</div>
+          <div class="swatchgrid">
+            <div class="sw"><i style="background:#5EEAD4"></i>Teal</div>
+            <div class="sw on"><i style="background:#93C5FD"><svg class="ic sm"><use href="#i-check"/></svg></i>Biru</div>
+            <div class="sw"><i style="background:#A5B4FC"></i>Indigo</div>
+            <div class="sw"><i style="background:#C4B5FD"></i>Ungu</div>
+            <div class="sw"><i style="background:#F9A8D4"></i>Merah Muda</div>
+            <div class="sw"><i style="background:#FCA5A5"></i>Merah</div>
+            <div class="sw"><i style="background:#FDBA74"></i>Oranye</div>
+            <div class="sw"><i style="background:#FCD34D"></i>Kuning</div>
+            <div class="sw"><i style="background:#6EE7B7"></i>Hijau</div>
+            <div class="sw"><i style="background:#67E8F9"></i>Cyan</div>
+          </div>
+        </div>
+        <div class="homebar"><i></i></div>
+      </div>
+      <div class="cap"><b>6.4 Tema</b><span class="size">Pil mode + grid aksen</span></div>
+    </div>
+
+    <div class="frame">
+      <div class="phone">
+        <div class="statusbar"><span>4:00</span><span>▮▮▮ ⌾ ▰</span></div>
+        <div class="appbar"><div class="iconbtn plain"><svg class="ic"><use href="#i-back"/></svg></div><h3>Tentang Aplikasi</h3></div>
+        <div class="content g12">
+          <div class="stack center g10" style="padding:8px 0"><div style="width:64px;height:64px;border-radius:20px;background:var(--accentContainer);display:grid;place-items:center"><svg class="ic lg" style="color:var(--accent)"><use href="#i-loc"/></svg></div><div class="t16 w6">Kostku</div><div class="t12 muted">Versi 1.0</div></div>
+          <div class="card t14 muted">Aplikasi pengelolaan kos: penghuni, kamar, pembayaran, dan pengeluaran dalam satu tempat.</div>
+          <div class="srow"><svg class="ic"><use href="#i-doc"/></svg><div class="grow t15">Syarat &amp; Ketentuan</div><svg class="ic chev"><use href="#i-chev"/></svg></div>
+          <div class="srow"><svg class="ic"><use href="#i-priv"/></svg><div class="grow t15">Kebijakan Privasi</div><svg class="ic chev"><use href="#i-chev"/></svg></div>
+          <div class="srow"><svg class="ic"><use href="#i-help"/></svg><div class="grow t15">Bantuan</div><svg class="ic chev"><use href="#i-chev"/></svg></div>
+        </div>
+        <div class="homebar"><i></i></div>
+      </div>
+      <div class="cap"><b>6.5 Tentang / Info</b></div>
+    </div>
+  </div>
+
+  <!-- ============ KOMPONEN ============ -->
+  <h2 class="sec">7. Komponen &amp; keadaan</h2>
+  <div class="grid">
+    <div class="frame">
+      <div class="phone">
+        <div class="statusbar"><span>4:00</span><span>▮▮▮ ⌾ ▰</span></div>
+        <div class="appbar"><h3>Penghuni</h3></div>
+        <div class="banner"><svg class="ic sm"><use href="#i-info"/></svg><div class="grow t13">Gagal menyimpan. Periksa koneksi lalu coba lagi.</div><b class="t12">Tutup</b></div>
+        <div class="content g12"><div class="lrow"><span class="avatar" style="background:linear-gradient(#cfe8a0,#6ba43a)"></span><div class="grow stack" style="gap:3px"><div class="t16 w6">Nayla</div><div class="t13 muted">Kamar 1 • wasd</div></div><div class="chip ok">Sisa 31 hari</div></div></div>
+        <div class="navbar" data-active="0"></div>
+        <div class="homebar"><i></i></div>
+      </div>
+      <div class="cap"><b>7.1 Banner error</b><span class="size">Persisten + tombol Tutup</span></div>
+    </div>
+
+    <div class="frame">
+      <div class="phone">
+        <div class="statusbar"><span>4:00</span><span>▮▮▮ ⌾ ▰</span></div>
+        <div class="appbar"><h3>Penghuni</h3></div>
+        <div class="content g12"><div class="lrow"><span class="avatar" style="background:linear-gradient(#cfe8a0,#6ba43a)"></span><div class="grow stack" style="gap:3px"><div class="t16 w6">Nayla</div><div class="t13 muted">Kamar 1 • wasd</div></div><div class="chip ok">Sisa 31 hari</div></div></div>
+        <div class="toast">Kwitansi tersimpan.</div>
+        <div class="navbar" data-active="0"></div>
+        <div class="homebar"><i></i></div>
+      </div>
+      <div class="cap"><b>7.2 Toast sukses</b><span class="size">Muncul di semua layar</span></div>
+    </div>
+
+    <div class="frame">
+      <div class="phone">
+        <div class="statusbar"><span>4:00</span><span>▮▮▮ ⌾ ▰</span></div>
+        <div class="appbar"><h3>Penghuni</h3></div>
+        <div class="content g12"><div class="lrow"><span class="avatar" style="background:linear-gradient(#cfe8a0,#6ba43a)"></span><div class="grow stack" style="gap:3px"><div class="t16 w6">Nayla</div><div class="t13 muted">Kamar 1 • wasd</div></div><div class="chip ok">Sisa 31 hari</div></div></div>
+        <div class="scrim" style="z-index:6"></div>
+        <div class="sheet">
+          <div class="grabber"></div>
+          <div class="t16 w6" style="padding:0 4px 6px">Pilih sumber foto</div>
+          <div class="sheetrow"><svg class="ic" style="color:var(--accent)"><use href="#i-grid"/></svg><div class="t15 w6">Galeri</div></div>
+          <div class="sheetrow"><svg class="ic" style="color:var(--accent)"><use href="#i-cam"/></svg><div class="t15 w6">Kamera</div></div>
+        </div>
+        <div class="homebar"><i></i></div>
+      </div>
+      <div class="cap"><b>7.3 Sheet sumber foto</b><span class="size">Galeri / Kamera</span></div>
+    </div>
+
+    <div class="frame">
+      <div class="phone">
+        <div class="statusbar"><span>4:00</span><span>▮▮▮ ⌾ ▰</span></div>
+        <div class="appbar"><h3>Memuat…</h3></div>
+        <div class="content" style="justify-content:center;align-items:center;gap:14px">
+          <div style="width:44px;height:44px;border-radius:50%;border:4px solid var(--outline);border-top-color:var(--accent);animation:spin 1s linear infinite"></div>
+          <div class="t13 muted">Memuat data…</div>
+        </div>
+        <div class="homebar"><i></i></div>
+      </div>
+      <div class="cap"><b>7.4 Memuat</b><span class="size">Spinner aksen</span></div>
+    </div>
+  </div>
+
+  <!-- ============ MODE TERANG ============ -->
+  <h2 class="sec">8. Contoh mode Terang <small>aksen Biru</small></h2>
+  <div class="grid">
+    <div class="frame light">
+      <div class="phone">
+        <div class="statusbar"><span>4:00</span><span>▮▮▮ ⌾ ▰</span></div>
+        <div class="appbar"><h3>Penghuni</h3><div class="grow"></div><div class="filterbtn"><svg class="ic"><use href="#i-filter"/></svg>Filter</div></div>
+        <div class="content g12">
+          <div class="search"><svg class="ic"><use href="#i-search"/></svg> Cari nama atau kamar…</div>
+          <div class="scroll g12">
+            <div class="lrow"><span class="avatar" style="background:linear-gradient(#cfe8a0,#6ba43a)"></span><div class="grow stack" style="gap:3px"><div class="t16 w6">Nayla</div><div class="t13 muted trunc">123 • Kamar 1 • wasd</div></div><div class="chip ok">Sisa 31 hari</div></div>
+            <div class="lrow"><span class="avatar" style="background:#DCE3EE"></span><div class="grow stack" style="gap:3px"><div class="t16 w6">Budiono</div><div class="t13 muted trunc">0812 • Kamar 3 • Miraya Kos</div></div><div class="chip warn">Sisa 12 hari</div></div>
+          </div>
+        </div>
+        <div class="fab"><svg class="ic"><use href="#i-plus"/></svg></div>
+        <div class="navbar" data-active="0"></div>
+        <div class="homebar"><i></i></div>
+      </div>
+      <div class="cap"><b>Terang — Penghuni</b></div>
+    </div>
+
+    <div class="frame light">
+      <div class="phone">
+        <div class="statusbar"><span>4:00</span><span>▮▮▮ ⌾ ▰</span></div>
+        <div class="appbar"><div class="iconbtn plain"><svg class="ic"><use href="#i-back"/></svg></div><h3>Perpanjang kos</h3></div>
+        <div class="content" style="overflow:hidden;gap:12px">
+          <div class="card"><div class="kv" style="padding-top:0"><span class="k">Tanggal keluar saat ini</span><span class="v">15 Nov 2026</span></div></div>
+          <div class="TF" style="margin-top:12px"><span class="lbl">Durasi perpanjangan</span><div class="inp">1 bulan <span class="grow"></span><svg class="ic xs muted"><use href="#i-chev"/></svg></div></div>
+          <div class="card stack g4" style="background:var(--accentContainer);border-color:transparent"><div class="t12 w6" style="color:var(--onAccentContainer)">TANGGAL KELUAR BARU</div><div class="t20 w7" style="color:var(--onAccentContainer)">15 Des 2026</div></div>
+          <div class="row between"><span class="t14 muted">Harga sewa baru</span><span class="t15 w6">Rp 1.111</span></div>
+          <div class="t12" style="color:var(--green)">Lunas — dibayar penuh Rp 1.111.</div>
+        </div>
+        <div class="stickycta"><div class="btn primary block">Perpanjang</div></div>
+        <div class="homebar"><i></i></div>
+      </div>
+      <div class="cap"><b>Terang — Perpanjang kos</b></div>
+    </div>
+
+    <div class="frame light">
+      <div class="phone">
+        <div class="statusbar"><span>4:00</span><span>▮▮▮ ⌾ ▰</span></div>
+        <div class="appbar"><div class="iconbtn plain"><svg class="ic"><use href="#i-back"/></svg></div><h3>Kwitansi</h3><div class="grow"></div><div class="iconbtn plain"><svg class="ic"><use href="#i-share"/></svg></div></div>
+        <div class="content">
+          <div class="receipt">
+            <div class="rc-brand"><svg class="ic lg" style="width:28px;height:28px"><use href="#i-home"/></svg></div>
+            <div class="stack center" style="gap:2px;margin-top:10px"><div class="t16 w6">wasd</div><div class="t12 muted">dddd • ssss</div></div>
+            <div class="dash"></div>
+            <div class="kv" style="padding-top:0"><span class="k">Penghuni</span><span class="v">Nayla</span></div>
+            <div class="kv"><span class="k">Kamar</span><span class="v">Kamar 1</span></div>
+            <div class="kv"><span class="k">Periode</span><span class="v">01 Okt 2026</span></div>
+            <div class="dash"></div>
+            <div class="row between"><span class="t14 muted">TOTAL DIBAYAR</span><span class="t20 w7" style="color:var(--green)">Rp 1.111</span></div>
+            <div class="row between" style="margin-top:12px"><span class="stamp">LUNAS</span></div>
+          </div>
+        </div>
+        <div class="stickycta row g10"><div class="btn block">Bagikan</div><div class="btn primary block">PDF</div></div>
+        <div class="homebar"><i></i></div>
+      </div>
+      <div class="cap"><b>Terang — Kwitansi</b></div>
+    </div>
+  </div>
+</div>
+
+<style>@keyframes spin{to{transform:rotate(360deg)}}</style>
+<script>
+  if (new URLSearchParams(location.search).has('check')) {
+    console.assert([...document.querySelectorAll('.frame')].every(frame => frame.parentElement.classList.contains('grid')), 'Semua layar harus berada dalam grid');
+    console.assert([...document.querySelectorAll('.phone')].every(phone => !phone.querySelector('.appbar use[href="#i-back"]') || !phone.querySelector('.navbar')), 'Layar dalam tanpa bottom nav');
+    console.assert(document.body.textContent.includes('UTILITAS KAMAR') && document.body.textContent.includes('UTILITAS LOKASI') && document.body.textContent.includes('Tidak tersedia'), 'Utilitas kamar, lokasi, dan data kosong');
+  }
+  document.querySelectorAll('.navbar').forEach(function(n){
+    var active = parseInt(n.dataset.active||'0');
+    var items=[['i-people','Penghuni'],['i-loc','Lokasi'],['i-wallet','Pembayaran'],['i-settings','Pengaturan']];
+    n.innerHTML = items.map(function(it,i){
+      return '<div class="navitem '+(i===active?'on':'')+'"><span class="pill"><svg class="ic"><use href="#'+it[0]+'"/></svg></span>'+it[1]+'</div>';
+    }).join('');
+  });
+</script>
+</body>
+</html>

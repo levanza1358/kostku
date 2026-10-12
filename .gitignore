@@ -1,0 +1,39 @@
+*.iml
+.gradle
+/local.properties
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+
+# Android / Gradle build output
+app/build/
+*/build/
+
+# Node (backend/ is legacy; never commit dependencies or build output)
+node_modules/
+backend/dist/
+
+# Secrets & environment (never commit)
+.env
+.env.*
+!.env.example
+*.jks
+*.keystore
+*.p12
+*.pem
+
+# Backend deploy backups created on the server / locally
+*.bak.*
+*.upload.tmp
+
+# Tooling / session artifacts
+.mesaCode/
